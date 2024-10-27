@@ -105,13 +105,13 @@ namespace MikanLab
         /// 注册以开始托管
         /// </summary>
         /// <param name="registration"></param>
-        public static void Register(ILifeCycle registration) => RegisterList.Add(registration);
+        public void Register(ILifeCycle registration) => RegisterList.Add(registration);
 
         /// <summary>
         /// 手动解除注册
         /// </summary>
         /// <param name="registration"></param>
-        public static void Unregister(ILifeCycle registration) => UnregisterList.Remove(registration);
+        public void Unregister(ILifeCycle registration) => UnregisterList.Remove(registration);
 
         /// <summary>
         /// 更新

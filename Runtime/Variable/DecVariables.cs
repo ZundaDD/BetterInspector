@@ -6,16 +6,18 @@ using UnityEngine;
 
 namespace MikanLab
 {
+    [Serializable]
     /// <summary>
     /// 按帧自减的无符号整形
     /// </summary>
     public class DecUInt : ILifeCycle
     {
+
         
         /// <summary>
         /// 计时器
         /// </summary>
-        private uint frameCount = 0;
+        [SerializeField] private uint frameCount = 0;
 
         /// <summary>
         /// 物体引用
@@ -33,7 +35,7 @@ namespace MikanLab
 
         public void Set(uint value)
         {
-            if (frameCount == 0) LifeCycle.Register(this);
+            if (frameCount == 0) LifeCycle.Instance.Register(this);
             frameCount = value;
         }
 
@@ -50,6 +52,7 @@ namespace MikanLab
         public void Update() { }
     }
 
+    [Serializable]
     /// <summary>
     /// 按帧自减，在归零时调用绑定委托
     /// </summary>
@@ -58,7 +61,7 @@ namespace MikanLab
         /// <summary>
         /// 计时器
         /// </summary>
-        private uint frameCount = 0;
+        [SerializeField] private uint frameCount = 0;
 
         /// <summary>
         /// 委托
@@ -90,7 +93,7 @@ namespace MikanLab
         {
             if (frameCount != 0) return;
 
-            LifeCycle.Register(this);
+            LifeCycle.Instance.Register(this);
             frameCount = value;
         }
 
@@ -109,7 +112,7 @@ namespace MikanLab
         {
             if (frameCount == 0) return;
 
-            LifeCycle.Unregister(this);
+            LifeCycle.Instance.Unregister(this);
             doWhat?.Invoke();
             frameCount = 0;
         }
@@ -121,7 +124,7 @@ namespace MikanLab
         {
             if(frameCount == 0) return;
 
-            LifeCycle.Unregister(this);
+            LifeCycle.Instance.Unregister(this);
             frameCount = 0;
         }
 
