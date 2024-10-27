@@ -1,0 +1,16 @@
+{
+    "name": "MikanLab.Better Inspector.Editor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:1f92aaf8a3d058d4c810650b4a5609c0"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

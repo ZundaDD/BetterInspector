@@ -1,0 +1,11 @@
+{
+  "name": "com.mikanlab.better_inspector",
+  "displayName": "Better Inspector",
+  "version": "1.0.0",
+  "description": "A short description of your package",
+  "unity": "2022.3.17f1c1",
+  "author": {
+    "name": "Hasekawa Mikan",
+    "email": "jenxnka@gamail.com"
+  }
+}
