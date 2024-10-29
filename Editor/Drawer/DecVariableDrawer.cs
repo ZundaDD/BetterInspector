@@ -1,15 +1,26 @@
 using MikanLab;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-[CustomPropertyDrawer(typeof(DecUInt))]
-public class DecVariableDrawer : PropertyDrawer
+namespace MikanLab
 {
-    public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
+    [CustomPropertyDrawer(typeof(DecUInt))]
+    public class DecUIntDrawer : PropertyDrawer
     {
-        SerializedProperty frameC = property.FindPropertyRelative("frameCount");
-        EditorGUI.PropertyField(position, frameC, label);
+        public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
+        {
+            SerializedProperty frameC = property.FindPropertyRelative("frameCount");
+            EditorGUI.PropertyField(position, frameC, label);
+        }
+    }
+
+    [CustomPropertyDrawer(typeof(DelegateUInt))]
+    public class DelegateUIntDrawer : PropertyDrawer
+    {
+        public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
+        {
+            SerializedProperty frameC = property.FindPropertyRelative("frameCount");
+            EditorGUI.PropertyField(position, frameC, label);
+        }
     }
 }
