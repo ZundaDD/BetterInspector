@@ -1,45 +1,26 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
 namespace MikanLab
 {
-    [CustomPropertyDrawer(typeof(MultiAttributeResource.Attribute))]
+    [CustomPropertyDrawer(typeof(BaseAttribute))]
     public class AttributeDrawer : PropertyDrawer
     {
+        Texture2D deleteIcon = (Texture2D)AssetDatabase.LoadAssetAtPath("Assets/MyIcon.png", typeof(Texture2D));
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
-            //获取枚举类型
-            MultiAttributeResource.Type type = (MultiAttributeResource.Type) property.FindPropertyRelative("typeEnum").enumValueIndex;
-            if(type == MultiAttributeResource.Type.Array)
-            {
+            EditorGUILayout.BeginHorizontal();
 
-            }
-            else
-            {
-                var rtype = property.FindPropertyRelative("realType");
-                var val = property.FindPropertyRelative("value").GetArrayElementAtIndex(0);
-                var content = new GUIContent(property.FindPropertyRelative("name").stringValue);
-                switch (type)
-                {
-                    case MultiAttributeResource.Type.String:
-                        EditorGUILayout.TextField(content,val.stringValue);break;
-                    case MultiAttributeResource.Type.Float:
-                        EditorGUILayout.FloatField(content,val.floatValue);break;
-                    case MultiAttributeResource.Type.Int:
-                        EditorGUILayout.IntField(content, val.intValue);break;
-                    case MultiAttributeResource.Type.Bool:
-                        EditorGUILayout.Toggle(content,val.boolValue);break;
-                        case MultiAttributeResource.Type.Enum:
-                        {
-                            
-                            //EditorGUILayout.EnumPopup(content, val);
-                            break;
-                        }
-                }
-                
-            }
+            //获取枚举类型
+            AttributeType type = (AttributeType) property.FindPropertyRelative("typeEnum").enumValueIndex;
+            
+            EditorGUILayout.EnumPopup(type,GUILayout.Width(100));
+            EditorGUILayout.TextField(property.FindPropertyRelative("name").stringValue,GUILayout.Width(100));
+            EditorGUILayout.LabelField(":",GUILayout.Width(20));
+            
+            //EditorGUILayout.PropertyField(property.FindPropertyRelative("value"),GUILayout.Width(100));
+            //if (GUILayout.Button(new GUIContent("删除"),GUILayout.Width(80))) {};
+            EditorGUILayout.EndHorizontal();
         }
     }
 }

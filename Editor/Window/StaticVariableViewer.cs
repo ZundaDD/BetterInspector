@@ -27,7 +27,7 @@ namespace MikanLab
         /// <summary>
         /// 显示窗口
         /// </summary>
-        [MenuItem("Window/静态成员监视器")]
+        [MenuItem("Window/MikanLab/静态成员监视器")]
         public static void ShowWindow()
         {
             GetWindow(typeof(StaticVariableViewer), false, "静态成员监视器");

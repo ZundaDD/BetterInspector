@@ -5,135 +5,92 @@ using UnityEngine;
 
 namespace MikanLab
 {
-    
+    [Serializable]
     [CreateAssetMenu(fileName = "MAR", menuName = "MikanLab/多属性资源")]
     /// <summary>
     /// 可以存储多种属性的资源文件
     /// </summary>
-    public class MultiAttributeResource : ScriptableObject
+    public class MultiAttributeResource : ScriptableObject,ISerializationCallbackReceiver
     {
-        [SerializeField]public List<Attribute> attributes = new();
+        [NonSerialized] public List<BaseAttribute> attributes = new();
+        
+        #region 序列化部分
+        
+        [SerializeField] public List<StringAttribute> strings = new();
+        [SerializeField] public List<IntAttribute> ints = new();
+        [SerializeField] public List<FloatAttribute> floats = new();
+        [SerializeField] public List<BoolAttribute> bools = new();
+        [SerializeField] public List<AttributeType> orders = new();
 
         /// <summary>
-        /// 类型分类
+        /// 序列化前的转移
         /// </summary>
-        public enum Type
+        /// <exception cref="NotImplementedException"></exception>
+        public void OnBeforeSerialize()
         {
-            String, Int, Float, Bool, Enum, Array
-        }
+            strings.Clear();
+            ints.Clear();
+            floats.Clear();
+            bools.Clear();
+            orders.Clear();
 
-        [Serializable]
-        /// <summary>
-        /// 单个属性
-        /// </summary>
-        public class Attribute
-        {
-            /// <summary>
-            /// 实际类型
-            /// </summary>
-            public System.Type realType;
-
-            [SerializeField]
-            /// <summary>
-            /// 类型枚举
-            /// </summary>
-            public Type typeEnum;
-
-            [SerializeField]
-            /// <summary>
-            /// 变量名
-            /// </summary>
-            public string name;
-
-            [SerializeReference]
-            /// <summary>
-            /// 变量值
-            /// </summary>
-            public object[] value = new object[] { "1" };
-
-
-            /// <summary>
-            /// 单数构造函数
-            /// </summary>
-            /// <param name="name">属性名</param>
-            /// <param name="value">属性值</param>
-            /// <param name="type">属性类型</param>
-            /// <exception cref="System.Exception">传入为数组</exception>
-            public Attribute(string name,object value,System.Type type)
+            foreach (BaseAttribute attribute in attributes)
             {
-
-                //判断数组
-                if(type.IsArray) throw new System.Exception("Use the Array Form of Constructor Instead");
-
-                //判断枚举
-                if(type.IsEnum)
+                switch(attribute.typeEnum)
                 {
-                    this.typeEnum = Type.Enum;
-                    this.realType = type;
+                    case AttributeType.Bool:
+                        bools.Add(attribute as BoolAttribute);
+                        orders.Add(AttributeType.Bool);
+                        break;
+                     case AttributeType.String:
+                        strings.Add(attribute as StringAttribute);
+                        orders.Add(AttributeType.String);
+                        break;
+                    case AttributeType.Float:
+                        floats.Add(attribute as FloatAttribute);
+                        orders.Add(AttributeType.Float);
+                        break;
+                    case AttributeType.Int:
+                        ints.Add(attribute as IntAttribute);
+                        orders.Add(AttributeType.Int);
+                        break;
                 }
-                //判断基本类型
-                else
-                {
-                    if (type == typeof(int))
-                    {
-                        this.realType = typeof(int);
-                        this.typeEnum = Type.Int;
-                    }
-                    else if(type == typeof(float))
-                    {
-                        this.realType = typeof(float);
-                        this.typeEnum = Type.Float;
-                    }
-                    else if(type == typeof(bool))
-                    {
-                        this.realType = typeof(bool);
-                        this.typeEnum = Type.Bool;
-                    }
-                    else if(type == typeof(string))
-                    {
-                        this.realType= typeof(string);
-                        this.typeEnum= Type.String;
-                    }
-                }
-
-                this.name = name;
-                this.value = new object[1];
-                this.value[0] = value;
             }
-
-            /// <summary>
-            /// 数组构造函数
-            /// </summary>
-            /// <param name="name">属性名</param>
-            /// <param name="value">数组值</param>
-            /// <param name="type">元数据类型</param>
-            /// <exception cref="System.Exception">传入为非数组</exception>
-            public Attribute(string name, object[] value, System.Type type)
-            {
-                if (!type.IsArray) throw new System.Exception("Use the Single Form of Constructor Instead");
-
-                this.name =name;
-                this.realType = type.GetElementType();
-                typeEnum = Type.Array;
-                this.value = value;
-            }
-
         }
 
-        /// <summary>
-        /// 不带类型地获取值
-        /// </summary>
-        /// <param name="Name">属性名称</param>
-        /// <returns>值引用</returns>
-        public object GetValue(string Name)
+        public void OnAfterDeserialize()
         {
-            foreach (Attribute a in attributes)
+            attributes.Clear();
+            int intor = 0,stringor = 0,floator = 0,boolor = 0;
+            foreach(AttributeType attrType in orders)
             {
-                if (a.name == Name) return a.typeEnum == Type.Array ? a.value : a.value[0];
-            }
-            throw new System.Exception($"Attibute {Name} Not Found");
-        }
+                switch(attrType)
+                {
+                    case AttributeType.Bool:
+                        attributes.Add(bools[boolor++]);
+                        break;
+                    case AttributeType.Float:
+                        attributes.Add(floats[floator++]);
+                        break;
+                    case AttributeType.String:
+                        attributes.Add(strings[stringor++]);
+                        break;
+                    case AttributeType.Int:
+                        attributes.Add(ints[intor++]);
+                        break;
 
+                }
+            }
+
+            strings.Clear();
+            ints.Clear();
+            floats.Clear();
+            bools.Clear();
+            orders.Clear();
+        }
+        #endregion
+
+        #region 访问值部分
         /// <summary>
         /// 获取一个字符串
         /// </summary>
@@ -141,11 +98,11 @@ namespace MikanLab
         /// <returns>string值</returns>
         public string GetString(string Name)
         {
-            foreach (Attribute a in attributes)
+            foreach (BaseAttribute a in attributes)
             {
                 if (a.name == Name)
                 {
-                    if (a.typeEnum == Type.String) return a.value[0] as string;
+                    if (a.typeEnum == AttributeType.String) return (a as StringAttribute).GetString() ;
                     else throw new System.Exception($"Type of {Name} Dosen't Match {a.typeEnum}");
                 }
             }
@@ -159,11 +116,11 @@ namespace MikanLab
         /// <returns>float值</returns>
         public float GetFloat(string Name)
         {
-            foreach (Attribute a in attributes)
+            foreach (BaseAttribute a in attributes)
             {
                 if (a.name == Name)
                 {
-                    if (a.typeEnum == Type.Float) return (float) a.value[0];
+                    if (a.typeEnum == AttributeType.Float) return (a as FloatAttribute).GetFloat();
                     else throw new System.Exception($"Type of {Name} Dosen't Match {a.typeEnum}");
                 }
             }
@@ -177,11 +134,11 @@ namespace MikanLab
         /// <returns>int值</returns>
         public int GetInt(string Name)
         {
-            foreach (Attribute a in attributes)
+            foreach (BaseAttribute a in attributes)
             {
                 if (a.name == Name)
                 {
-                    if (a.typeEnum == Type.Int) return (int)a.value[0];
+                    if (a.typeEnum == AttributeType.Int) return (a as IntAttribute).GetInt();
                     else throw new System.Exception($"Type of {Name} Dosen't Match {a.typeEnum}");
                 }
             }
@@ -195,15 +152,16 @@ namespace MikanLab
         /// <returns>bool值</returns>
         public bool GetBool(string Name)
         {
-            foreach (Attribute a in attributes)
+            foreach (BaseAttribute a in attributes)
             {
                 if (a.name == Name)
                 {
-                    if (a.typeEnum == Type.Bool) return (bool)a.value[0];
+                    if (a.typeEnum == AttributeType.Bool) return (a as BoolAttribute).GetBool();
                     else throw new System.Exception($"Type of {Name} Dosen't Match {a.typeEnum}");
                 }
             }
             throw new System.Exception($"Attibute {Name} Not Found");
         }
+        #endregion
     }
 }

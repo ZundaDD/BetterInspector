@@ -12,10 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7fc6764d4dae2e94496beba6a28aeac3, type: 3}
   m_Name: MAR
   m_EditorClassIdentifier: 
-  attributes:
+  strings:
   - typeEnum: 0
-    name: 
-    value: []
-  references:
-    version: 2
-    RefIds: []
+    name: default
+    value: 
+  ints:
+  - typeEnum: 1
+    name: default
+    value: 0
+  floats: []
+  bools:
+  - typeEnum: 3
+    name: default
+    value: 0
+  - typeEnum: 3
+    name: default
+    value: 1
+  orders: 03000000000000000100000003000000
