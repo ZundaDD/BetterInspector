@@ -7,6 +7,10 @@
 <li>多重属性资源MultiAttributeResource:可以存储自定义地属性的非运行时数据的简单对象</li>
 </ul>
 
-## 相关内容
+## 计划加入
+<ul>
+<li>随机池RandomPool：从简单的伤害计算到复杂的战利品掉落都可以胜任的随机事件触发器</li>
+
+## 其他
 如果您在使用过程中发现问题或者觉得有可以改进的地方，可以在Issues板块中提出。</br>
 关于文档，详见[https://github.com/SuzukazeAobaLove/Better-Inspector/blob/main/Doc.md](https://github.com/SuzukazeAobaLove/Better-Inspector/blob/main/Doc.md)</br>
