@@ -19,7 +19,7 @@ MonoBehaviour:
   ints:
   - typeEnum: 1
     name: default
-    value: 0
+    value: 100
   floats: []
   bools:
   - typeEnum: 3
