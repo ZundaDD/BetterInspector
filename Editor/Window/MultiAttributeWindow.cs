@@ -18,10 +18,21 @@ namespace MikanLab
         /// </summary>
         MultiAttributeResource curEdit;
 
+        /// <summary>
+        /// 滚动条值
+        /// </summary>
         Vector2 scroll;
 
+        /// <summary>
+        /// 删除图标
+        /// </summary>
         Texture deleteIcon;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        GUIStyle FieldStyle = new GUIStyle();
+        
         /// <summary>
         /// 工具栏打开窗口
         /// </summary>
@@ -48,8 +59,12 @@ namespace MikanLab
             maxSize = new Vector2(500, 800);
             position = new Rect(100, 100, 300, 150);
 
+            //加载Icon
             deleteIcon = AssetDatabase.LoadAssetAtPath<Texture>(AssetDatabase.GUIDToAssetPath("5f3bcd12f441e1f4a84b5a685237064a"));
             
+            //调整边距
+            FieldStyle.margin.top = -4; 
+            FieldStyle.margin.bottom = -4;
         }
 
         private void OnDisable()
@@ -79,13 +94,23 @@ namespace MikanLab
 
             GUILayout.EndHorizontal();
 
-            scroll =  EditorGUILayout.BeginScrollView(scroll,false,true);
+            //表格头部分
+            GUILayout.BeginHorizontal();
+            GUILayout.Label("类型", GUILayout.Width(100));
+            GUILayout.Label("属性名",GUILayout.Width(110));
+            GUILayout.Label("属性值", GUILayout.Width(100));
+
+
+            GUILayout.EndHorizontal();
+
+            scroll =  GUILayout.BeginScrollView(scroll,false,false);
             
+
             //依次绘制所有属性
             for(int index = 0;index < curEdit.attributes.Count;++index)
             {
                 var Item = curEdit.attributes[index];
-                EditorGUILayout.BeginHorizontal();
+                GUILayout.BeginHorizontal(FieldStyle);
                 
                 //判断是否涉及到类型转换
                 var newType = (AttributeType) EditorGUILayout.EnumPopup(Item.typeEnum, GUILayout.Width(100));
@@ -105,14 +130,14 @@ namespace MikanLab
                 }
                 
                 //绘制名称
-                Item.name = EditorGUILayout.TextField(Item.name,GUILayout.Width(100));
-                EditorGUILayout.LabelField(":", GUILayout.Width(10));
+                Item.name = GUILayout.TextField(Item.name,GUILayout.Width(100));
+                GUILayout.Label(":", GUILayout.Width(10));
                 
                 //绘制实际值
                 switch(Item.typeEnum)
                 {
                     case AttributeType.String:
-                        (Item as StringAttribute).value = EditorGUILayout.TextField((Item as StringAttribute).value, GUILayout.Width(100));
+                        (Item as StringAttribute).value = GUILayout.TextField((Item as StringAttribute).value, GUILayout.Width(100));
                         break;
                     case AttributeType.Int:
                         (Item as IntAttribute).value = EditorGUILayout.IntField((Item as IntAttribute).value, GUILayout.Width(100));
@@ -131,9 +156,10 @@ namespace MikanLab
                     deleteIndex = index;
                 }
 
-                EditorGUILayout.EndHorizontal();
+                GUILayout.EndHorizontal();
             }
-            EditorGUILayout.EndScrollView();
+
+            GUILayout.EndScrollView();
 
             //根据状态进行更改
             if (deleteIndex != -1)

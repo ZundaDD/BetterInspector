@@ -28,7 +28,7 @@ namespace MikanLab
 
     //LifeCycle用于对托管对象的生命循环做出集中处理
     //实现Unity Monobehaviour组件基本功能：初始化，时钟,(预计加入销毁)
-    //托管对象不需要作为脚本挂在物体上，比如selfUpdateInt
+    //托管对象不需要作为脚本挂在物体上
     public class LifeCycle : MonoBehaviour
     {
         //静态成员指向当前的单例对象
