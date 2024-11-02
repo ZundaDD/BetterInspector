@@ -12,7 +12,11 @@ DecUIntÊÇÒ»¸öÊµÏÖÁËILifeCycleµÄ±äÁ¿£¬ËüÊÇ¶ÔUIntµÄÒ»²ã·â×°£¬²¢ÔÚÃ¿Ò»¸öÎïÀíÖ¡×Ô¼õ¡
 </br>
 Ê¹ÓÃÑùÀý
 <ul>
-<li>DecUInt foo = new(gameObject);</li>
+<li>
+```
+DecUInt foo = new(gameObject);
+```
+</li>
 
 </ul>
 
