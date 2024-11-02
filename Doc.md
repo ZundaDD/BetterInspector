@@ -3,26 +3,35 @@
 [2.资源文件](#ResourceAsset)</br>
 [3.属性](#Attribute)</br>
 
-## 变量<a name= "Variable"></a>
+## 变量<a name="Variable"></a>
 
 ### 计时器变量
 DecUInt是一个实现了ILifeCycle的变量，它是对UInt的一层封装，并在每一个物理帧自减。
 使用构造函数初始化的时候，需要一个GameObject物体作为挂载的对象，
 一旦该对象被销毁，DecUInt也将销毁。
-</br>
-使用样例
-```
-DecUInt foo = new(gameObject);
-```
-
-
 </br></br>
 DelegateUInt在DecUInt的基础上加入了计时归零触发回调的功能，在使用构造函数初始化的时候指定回调。
 同时，DelegateUInt一旦计时不为零，将无法再次设置时间，只能通过Trigger立即触发、Cancel取消触发、
 Lengthen延长触发进行更改。
 </br></br>
+使用样例
+```
+DecUInt foo = new(gameObject);
+foo.Set(1f);
+if(foo.Zero())
+{
+	...Do Something.
+}
 
-## 资源文件<a name = "ResourceAsset"></a>
+DelegateUInt foo = new(gameObject,() => Debug.Log("Delegate Triggered!"));
+foo.Set(1f);
+foo.Cancel();
+foo.Set(2f);
+foo.Lengthen(1f);
+foo.Trigger();
+```
+</br></br>
+## 资源文件<a name ="ResourceAsset"></a>
 
 ### 多重属性资源
 MultiAttributeResource是一个继承自ScriptObject的资源文件，它可以包含若干个String、Int、Bool、Float变量。
@@ -35,7 +44,7 @@ MultiAttributeResource是一个继承自ScriptObject的资源文件，它可以包含若干个String
 </br></br>
 
 
-## 属性<a name = "Attribute"></a>
+## 属性<a name ="Attribute"></a>
 
 ### 静态变量监听
 打上[TrackStatic]的类将纳入静态变量监视列表，类中的静态对象可以在KikanLab/静态变量监视器中查看。
