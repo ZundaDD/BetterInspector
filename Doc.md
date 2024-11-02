@@ -11,14 +11,10 @@ DecUIntÊÇÒ»¸öÊµÏÖÁËILifeCycleµÄ±äÁ¿£¬ËüÊÇ¶ÔUIntµÄÒ»²ã·â×°£¬²¢ÔÚÃ¿Ò»¸öÎïÀíÖ¡×Ô¼õ¡
 Ò»µ©¸Ã¶ÔÏó±»Ïú»Ù£¬DecUIntÒ²½«Ïú»Ù¡£
 </br>
 Ê¹ÓÃÑùÀý
-<ul>
-<li>
 ```
 DecUInt foo = new(gameObject);
 ```
-</li>
 
-</ul>
 
 </br></br>
 DelegateUIntÔÚDecUIntµÄ»ù´¡ÉÏ¼ÓÈëÁË¼ÆÊ±¹éÁã´¥·¢»Øµ÷µÄ¹¦ÄÜ£¬ÔÚÊ¹ÓÃ¹¹Ôìº¯Êý³õÊ¼»¯µÄÊ±ºòÖ¸¶¨»Øµ÷¡£
