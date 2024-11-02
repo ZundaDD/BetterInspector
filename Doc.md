@@ -9,6 +9,13 @@
 DecUInt是一个实现了ILifeCycle的变量，它是对UInt的一层封装，并在每一个物理帧自减。
 使用构造函数初始化的时候，需要一个GameObject物体作为挂载的对象，
 一旦该对象被销毁，DecUInt也将销毁。
+</br>
+使用样例
+<ul>
+<li> ```DecUInt foo = new(gameObject);``` </li>
+
+</ul>
+
 </br></br>
 DelegateUInt在DecUInt的基础上加入了计时归零触发回调的功能，在使用构造函数初始化的时候指定回调。
 同时，DelegateUInt一旦计时不为零，将无法再次设置时间，只能通过Trigger立即触发、Cancel取消触发、
