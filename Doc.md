@@ -1,9 +1,9 @@
-,# д©б╪
+# д©б╪
 [1.╠Да©](#Variable)</br>
 [2.вйт╢нд╪Ч](#ResourceAsset)</br>
 [3.йТпт](#Attribute)</br>
 
-## ╠Да©<a id= "Variable"></a>
+## ╠Да©<a name= "Variable"></a>
 
 ### ╪фй╠фВ╠Да©
 DecUIntйгр╩╦Жй╣ожакILifeCycle╣д╠Да©ё╛кЭйг╤тUInt╣др╩╡Ц╥Бв╟ё╛╡╒тзц©р╩╦ЖнОюМж║вт╪У║ё
@@ -15,7 +15,7 @@ DelegateUIntтзDecUInt╣д╩Ы╢║ио╪схКак╪фй╠╧ИаЦ╢╔╥╒╩ь╣В╣д╧╕дэё╛тзй╧сц╧╧тЛ╨╞йЩЁУй╪╩╞╣
 LengthenясЁ╓╢╔╥╒╫Ьпп╦Э╦д║ё
 </br></br>
 
-## вйт╢нд╪Ч<a id = "ResourceAsset"></a>
+## вйт╢нд╪Ч<a name = "ResourceAsset"></a>
 
 ### ╤ЮжьйТптвйт╢
 MultiAttributeResourceйгр╩╦Ж╪лЁпвтScriptObject╣двйт╢нд╪Чё╛кЭ©ирт╟Э╨╛хТ╦и╦ЖString║╒Int║╒Bool║╒Float╠Да©║ё
@@ -28,7 +28,7 @@ MultiAttributeResourceйгр╩╦Ж╪лЁпвтScriptObject╣двйт╢нд╪Чё╛кЭ©ирт╟Э╨╛хТ╦и╦ЖString
 </br></br>
 
 
-## йТпт<a id = "Attribute"></a>
+## йТпт<a name = "Attribute"></a>
 
 ### ╬╡л╛╠Да©╪ЮлЩ
 ╢Рио[TrackStatic]╣дюЮ╫╚дихК╬╡л╛╠Да©╪Юйсап╠Мё╛юЮжп╣д╬╡л╛╤тоС©ирттзKikanLab/╬╡л╛╠Да©╪ЮйсфВжп╡И©╢║ё
