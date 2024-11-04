@@ -6,11 +6,13 @@ namespace MikanLab
     [CustomPropertyDrawer(typeof(StringAttribute))]
     public class StringAttributeDrawer : PropertyDrawer
     {
+        
+
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
             EditorGUILayout.BeginHorizontal();
             GUI.enabled = false;
-            //获取枚举类型
+            //鑾峰彇鏋氫妇绫诲瀷
             AttributeType type = (AttributeType) property.FindPropertyRelative("typeEnum").enumValueIndex;
             
             EditorGUILayout.EnumPopup(type,GUILayout.Width(100));
@@ -28,7 +30,7 @@ namespace MikanLab
         {
             EditorGUILayout.BeginHorizontal();
             GUI.enabled = false;
-            //获取枚举类型
+            //鑾峰彇鏋氫妇绫诲瀷
             AttributeType type = (AttributeType)property.FindPropertyRelative("typeEnum").enumValueIndex;
 
             EditorGUILayout.EnumPopup(type, GUILayout.Width(100));
@@ -47,7 +49,7 @@ namespace MikanLab
         {
             EditorGUILayout.BeginHorizontal();
             GUI.enabled = false;
-            //获取枚举类型
+            //鑾峰彇鏋氫妇绫诲瀷
             AttributeType type = (AttributeType)property.FindPropertyRelative("typeEnum").enumValueIndex;
 
             EditorGUILayout.EnumPopup(type, GUILayout.Width(100));
@@ -66,7 +68,7 @@ namespace MikanLab
         {
             EditorGUILayout.BeginHorizontal();
             GUI.enabled = false;
-            //获取枚举类型
+            //鑾峰彇鏋氫妇绫诲瀷
             AttributeType type = (AttributeType)property.FindPropertyRelative("typeEnum").enumValueIndex;
 
             EditorGUILayout.EnumPopup(type, GUILayout.Width(100));

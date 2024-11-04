@@ -9,96 +9,77 @@ using UnityEngine;
 namespace MikanLab
 {
     /// <summary>
-    /// ¶àÖØÊôĞÔ×ÊÔ´±à¼­Æ÷
+    /// å¤šé‡å±æ€§èµ„æºç¼–è¾‘å™¨
     /// </summary>
-    public class MultiAttributeWindow : EditorWindow
+    public class MultiAttributeWindow : AssetEditor<MultiAttributeResource,MultiAttributeWindow>
     {
-        /// <summary>
-        /// µ±Ç°ÕıÔÚ±à¼­µÄ×ÊÔ´ÎÄ¼ş
-        /// </summary>
-        MultiAttributeResource curEdit;
+        static MultiAttributeWindow()
+        {
+            WindowName = "å¤šé‡å±æ€§èµ„æºç¼–è¾‘å™¨";
+        }
 
         /// <summary>
-        /// ¹ö¶¯ÌõÖµ
+        /// æ»šåŠ¨æ¡å€¼
         /// </summary>
         Vector2 scroll;
 
         /// <summary>
-        /// É¾³ıÍ¼±ê
+        /// åˆ é™¤å›¾æ ‡
         /// </summary>
         Texture deleteIcon;
 
         /// <summary>
-        /// 
+        /// åŒºåŸŸé™åˆ¶
         /// </summary>
         GUIStyle FieldStyle = new GUIStyle();
         
         /// <summary>
-        /// ¹¤¾ßÀ¸´ò¿ª´°¿Ú
+        /// å·¥å…·æ æ‰“å¼€çª—å£
         /// </summary>
-        [MenuItem("Window/MikanLab/¶àÖØÊôĞÔ×ÊÔ´±à¼­Æ÷")] // ÉèÖÃ²Ëµ¥ÏîÂ·¾¶
+        [MenuItem("Window/MikanLab/å¤šé‡å±æ€§èµ„æºç¼–è¾‘å™¨")] // è®¾ç½®èœå•é¡¹è·¯å¾„
         public static void ShowWindow()
         {
-            GetWindow<MultiAttributeWindow>("¶àÖØÊôĞÔ×ÊÔ´±à¼­Æ÷");
-        }
-
-        /// <summary>
-        /// ´ø²ÎÊıµÄ´ò¿ª´°¿Ú
-        /// </summary>
-        /// <param name="multiAttibuteResource"></param>
-        public static void ShowWindow(MultiAttributeResource multiAttibuteResource)
-        {
-            var window = GetWindow<MultiAttributeWindow>("¶àÖØÊôĞÔ×ÊÔ´±à¼­Æ÷");
-            window.curEdit = multiAttibuteResource;
+            GetWindow<MultiAttributeWindow>("å¤šé‡å±æ€§èµ„æºç¼–è¾‘å™¨");
         }
 
         void Awake()
         {
-            //Î»ÖÃ´óĞ¡µ÷Õû
+            //ä½ç½®å¤§å°è°ƒæ•´
             minSize = new Vector2(500, 400);
             maxSize = new Vector2(500, 800);
             position = new Rect(100, 100, 300, 150);
 
-            //¼ÓÔØIcon
+            //åŠ è½½Icon
             deleteIcon = AssetDatabase.LoadAssetAtPath<Texture>(AssetDatabase.GUIDToAssetPath("5f3bcd12f441e1f4a84b5a685237064a"));
             
-            //µ÷Õû±ß¾à
+            //è°ƒæ•´è¾¹è·
             FieldStyle.margin.top = -4; 
             FieldStyle.margin.bottom = -4;
         }
 
-        private void OnDisable()
+        public override void OnGUI()
         {
+            base.OnGUI();
             if (curEdit == null) return;
-            EditorUtility.SetDirty(curEdit);
-            AssetDatabase.SaveAssets();
-            curEdit = null;
-        }
 
-        public void OnGUI()
-        {
-            int deleteIndex = -1;
+            int deleteIndex = -1; 
             
-            curEdit = (MultiAttributeResource) EditorGUILayout.ObjectField("µ±Ç°±à¼­¶ÔÏó", curEdit, typeof(MultiAttributeResource),false);
-
-            if (curEdit == null) return;
-            
-            //¹¤¾ßÀ¸²¿·Ö
+            //å·¥å…·æ éƒ¨åˆ†
             GUILayout.BeginHorizontal();
-            //»æÖÆ²Ù×÷°´Å¥
-            if (GUILayout.Button("Ìí¼ÓÊôĞÔ", GUILayout.Width(100)))
+            //ç»˜åˆ¶æ“ä½œæŒ‰é’®
+            if (GUILayout.Button("æ·»åŠ å±æ€§", GUILayout.Width(100)))
             {
                 GUI.FocusControl("");
                 curEdit.attributes.Add(new StringAttribute());
             }
 
             GUILayout.EndHorizontal();
-
-            //±í¸ñÍ·²¿·Ö
+            
+            //è¡¨æ ¼å¤´éƒ¨åˆ†
             GUILayout.BeginHorizontal();
-            GUILayout.Label("ÀàĞÍ", GUILayout.Width(100));
-            GUILayout.Label("ÊôĞÔÃû",GUILayout.Width(110));
-            GUILayout.Label("ÊôĞÔÖµ", GUILayout.Width(100));
+            GUILayout.Label("ç±»å‹", GUILayout.Width(100));
+            GUILayout.Label("å±æ€§å",GUILayout.Width(110));
+            GUILayout.Label("å±æ€§å€¼", GUILayout.Width(100));
 
 
             GUILayout.EndHorizontal();
@@ -106,13 +87,13 @@ namespace MikanLab
             scroll =  GUILayout.BeginScrollView(scroll,false,false);
             
 
-            //ÒÀ´Î»æÖÆËùÓĞÊôĞÔ
+            //ä¾æ¬¡ç»˜åˆ¶æ‰€æœ‰å±æ€§
             for(int index = 0;index < curEdit.attributes.Count;++index)
             {
                 var Item = curEdit.attributes[index];
                 GUILayout.BeginHorizontal(FieldStyle);
                 
-                //ÅĞ¶ÏÊÇ·ñÉæ¼°µ½ÀàĞÍ×ª»»
+                //åˆ¤æ–­æ˜¯å¦æ¶‰åŠåˆ°ç±»å‹è½¬æ¢
                 var newType = (AttributeType) EditorGUILayout.EnumPopup(Item.typeEnum, GUILayout.Width(100));
                 if(newType != Item.typeEnum)
                 {
@@ -129,11 +110,11 @@ namespace MikanLab
                     }
                 }
                 
-                //»æÖÆÃû³Æ
+                //ç»˜åˆ¶åç§°
                 Item.name = GUILayout.TextField(Item.name,GUILayout.Width(100));
                 GUILayout.Label(":", GUILayout.Width(10));
                 
-                //»æÖÆÊµ¼ÊÖµ
+                //ç»˜åˆ¶å®é™…å€¼
                 switch(Item.typeEnum)
                 {
                     case AttributeType.String:
@@ -150,8 +131,8 @@ namespace MikanLab
                         break;
                 }
 
-                //É¾³ı°´Å¥»æÖÆ
-                if (GUILayout.Button(new GUIContent("É¾³ı",deleteIcon),GUILayout.Width(50),GUILayout.Height(20)))
+                //åˆ é™¤æŒ‰é’®ç»˜åˆ¶
+                if (GUILayout.Button(new GUIContent("åˆ é™¤",deleteIcon),GUILayout.Width(50),GUILayout.Height(20)))
                 {
                     deleteIndex = index;
                 }
@@ -161,7 +142,7 @@ namespace MikanLab
 
             GUILayout.EndScrollView();
 
-            //¸ù¾İ×´Ì¬½øĞĞ¸ü¸Ä
+            //æ ¹æ®çŠ¶æ€è¿›è¡Œæ›´æ”¹
             if (deleteIndex != -1)
             {
                 GUI.FocusControl("");
@@ -170,5 +151,7 @@ namespace MikanLab
             }
             
         }
+
     }
+    
 }

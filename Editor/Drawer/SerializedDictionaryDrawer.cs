@@ -1,6 +1,0 @@
-﻿using UnityEditor;
-
-namespace MikanLab
-{
-    
-}

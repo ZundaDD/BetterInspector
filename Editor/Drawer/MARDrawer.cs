@@ -9,10 +9,11 @@ namespace MikanLab
     [CustomEditor(typeof(MultiAttributeResource))]
     public class MultiAttributeDrawer : Editor
     {
+        
         public override void OnInspectorGUI()
         {
-            EditorGUILayout.HelpBox("此处仅供查看，如要编辑请在编辑器中进行！",MessageType.Warning);
-            if(GUILayout.Button("在编辑器中打开"))
+            EditorGUILayout.HelpBox("姝ゅ浠呬緵鏌ョ湅锛屽瑕佺紪杈戣鍦ㄧ紪杈戝櫒涓繘琛岋紒",MessageType.Warning);
+            if(GUILayout.Button("鍦ㄧ紪杈戝櫒涓墦寮�"))
             {
                 MultiAttributeWindow.ShowWindow(serializedObject.targetObject as MultiAttributeResource);
             }
@@ -23,10 +24,10 @@ namespace MikanLab
             SerializedProperty floats = serializedObject.FindProperty("floats");
             SerializedProperty orders = serializedObject.FindProperty("orders");
 
+            EditorGUILayout.BeginVertical();
             int intor = 0, boolor = 0, stringor = 0, floator = 0;
             for (int i= 0;i< orders.arraySize;++i)
             {
-
                 EditorGUILayout.PropertyField((AttributeType)orders.GetArrayElementAtIndex(i).enumValueIndex switch
                 {
                     AttributeType.String => strings.GetArrayElementAtIndex(stringor++),
@@ -36,6 +37,7 @@ namespace MikanLab
                     _ => throw new System.Exception("Unsupported Attribute Type")
                 });
             }
+            EditorGUILayout.EndVertical();
         }
     }
 }
