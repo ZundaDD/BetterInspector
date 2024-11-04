@@ -83,7 +83,7 @@ namespace MikanLab
 
 
             GUILayout.EndHorizontal();
-
+            EditorGUI.BeginChangeCheck();
             scroll =  GUILayout.BeginScrollView(scroll,false,false);
             
 
@@ -141,6 +141,9 @@ namespace MikanLab
             }
 
             GUILayout.EndScrollView();
+            //如果发生了更改
+            if (EditorGUI.EndChangeCheck() && !IfEdited) IfEdited = true;
+            
 
             //根据状态进行更改
             if (deleteIndex != -1)

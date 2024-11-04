@@ -18,6 +18,11 @@ namespace MikanLab
         protected TAsset curEdit = null;
 
         /// <summary>
+        /// 当前选择对象
+        /// </summary>
+        protected TAsset curRef = null;
+
+        /// <summary>
         /// 当前序列化的对象
         /// </summary>
         protected SerializedObject curSerialized = null;
@@ -26,6 +31,11 @@ namespace MikanLab
         /// 是否固定编辑对象
         /// </summary>
         private bool FixedObject = true;
+
+        /// <summary>
+        /// 是否修改过
+        /// </summary>
+        protected bool IfEdited = false;
 
         #region 静态设置
         /// <summary>
@@ -50,11 +60,35 @@ namespace MikanLab
         /// <param name="OpenWithObject">带入的对象</param>
         public static void ShowWindow(TAsset OpenWithObject)
         {
-            
             var window = GetWindow<TWindow>();
             window.titleContent = new(WindowName);
-            window.curEdit = OpenWithObject;
+            window.curRef = OpenWithObject;
+
+            //复制对象
+            if (window.curRef != null)
+            {
+                window.curEdit = Instantiate(window.curRef);
+                window.curEdit.name = window.curRef.name;
+                if (NeedToSerialize) window.curSerialized = new(window.curEdit);
+            }
+
             window.FixedObject = true;
+        }
+
+        public virtual void OnDisable()
+        {
+            if (IfEdited)
+            {
+                if (EditorUtility.DisplayDialog("未保存的更改", "是否保存对目标的更改?", "保存", "丢弃"))
+                {
+                    SaveCurEdit();
+                }
+            }
+            DestroyImmediate(curEdit);
+
+            curRef = null;
+            curEdit = null;
+            curSerialized = null;
         }
 
         /// <summary>
@@ -65,8 +99,9 @@ namespace MikanLab
             #region 工具栏绘制
             EditorGUILayout.BeginHorizontal();
             float widthAve = Mathf.Min(50, position.width / ToolBarCount);
-            if (GUILayout.Button("保存", EditorStyles.toolbarButton, GUILayout.Width(widthAve), GUILayout.Height(20)))
+            if (GUILayout.Button("保存" + (IfEdited ? "*" : ""), EditorStyles.toolbarButton, GUILayout.Width(widthAve), GUILayout.Height(20)))
             {
+                IfEdited = false;
                 SaveCurEdit();
             }
             ToolbarHook(widthAve, 50f);
@@ -77,22 +112,31 @@ namespace MikanLab
             if (FixedObject)
             {
                 GUI.enabled = false;
-                EditorGUILayout.ObjectField("当前编辑对象", curEdit, typeof(TAsset), false);
+                EditorGUILayout.ObjectField("当前编辑对象", curRef, typeof(TAsset), false);
                 GUI.enabled = true;
             }
             else
             {
-                var newcurEdit = (TAsset)EditorGUILayout.ObjectField("当前编辑对象", curEdit, typeof(TAsset), false);
+                var newcurRef = (TAsset)EditorGUILayout.ObjectField("当前编辑对象", curRef, typeof(TAsset), false);
 
                 //对选择对象进行检查
-                if (newcurEdit != curEdit)
+                if (newcurRef != curRef)
                 {
-                    //先保存之前的
-                    SaveCurEdit();
 
-                    //建立新的
-                    curEdit = newcurEdit;
-                    if (NeedToSerialize && curEdit != null) curSerialized = new(curEdit);
+                    //要么保留更改，要么丢弃
+                    if (IfEdited)
+                    {
+                        if (EditorUtility.DisplayDialog("未保存的更改", "是否保存对目标的更改?", "保存", "丢弃"))
+                        {
+                            SaveCurEdit();
+                        }
+                    }
+                    DestroyImmediate(curEdit);
+
+                    //建立新的引用以及编辑对象
+                    curRef = newcurRef;
+                    if (curRef != null) curEdit = Instantiate(curRef);
+                    if (NeedToSerialize && curRef != null) curSerialized = new(curEdit);
                     else curSerialized = null;
                 }
             }
@@ -104,10 +148,15 @@ namespace MikanLab
         /// </summary>
         protected virtual void SaveCurEdit()
         {
-            if (curEdit == null) return;
-            if (NeedToSerialize) curSerialized.ApplyModifiedProperties();
-            EditorUtility.SetDirty(curEdit);
-            AssetDatabase.SaveAssets();
+            if (curEdit != null && curRef != null)
+            {
+                if (NeedToSerialize) curSerialized.ApplyModifiedProperties();
+                string path = AssetDatabase.GetAssetPath(curRef);
+                EditorUtility.CopySerialized(curEdit, curRef);
+                AssetDatabase.SaveAssets();
+                AssetDatabase.Refresh();
+                IfEdited = false;
+            }
         }
 
         /// <summary>
