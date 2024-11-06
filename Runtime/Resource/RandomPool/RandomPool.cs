@@ -1,9 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace MikanLab
 {
+    [Serializable]
     /// <summary>
     /// 基础节点
     /// </summary>
@@ -45,7 +47,7 @@ namespace MikanLab
         public int Weight; 
     }
 
-    [CreateAssetMenu(fileName ="RandomPool",menuName = "MikanLab/随机池")]
+    [CreateAssetMenu(fileName = "RandomPool", menuName = "MikanLab/随机池")]
     /// <summary>
     /// 基本随机池
     /// </summary>
@@ -54,7 +56,7 @@ namespace MikanLab
         /// <summary>
         /// 节点池
         /// </summary>
-        public List<BaseNode> NodePool;
+        [SerializeReference] public List<BaseNode> NodePool = new();
 
         /// <summary>
         /// 是否为计数不放回模式
