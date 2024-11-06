@@ -1,19 +1,20 @@
-# Better Inspector°ü¤ÎÄÚÈÝ
-ÕâÊÇÒ»¸ö¸ù¾Ý±¾ÈË£¨Gamejam£©¿ª·¢¾­Àú×ö³öµÄ¹¤¾ßÍØÕ¹°ü£¬ÀïÃæ¼¯ºÏÁËÒ»Ð©~~²»ÄÑ~~ÊµÏÖµÄÊµÓÃÐ¡¹¤¾ß¡£</br>
-°üÀ¨µ«²»ÏÞÓÚÒÔÏÂÄÚÈÝ£º</br>
+# Better InspectoråŒ…ã®å†…å®¹
+è¿™æ˜¯ä¸€ä¸ªæ ¹æ®æœ¬äººï¼ˆGamejamï¼‰å¼€å‘ç»åŽ†åšå‡ºçš„å·¥å…·æ‹“å±•åŒ…ï¼Œé‡Œé¢é›†åˆäº†ä¸€äº›~~ä¸éš¾~~å®žçŽ°çš„å®žç”¨å°å·¥å…·ã€‚</br>
+åŒ…æ‹¬ä½†ä¸é™äºŽä»¥ä¸‹å†…å®¹ï¼š</br>
 <ul>
-<li>×Ô¼õ±äÁ¿DecVaribles£º°´Ö¡¸üÐÂµÄ¼ÆÊ±Æ÷£¬²¢¿ÉÒÔÉèÖÃ½áÊø»Øµ÷</li>
-<li>¾²Ì¬±äÁ¿¼àÊÓÆ÷StaticVaribleViewer:¿ÉÒÔ°´ÐèÏÔÊ¾»òÕßÐÞ¸ÄÀà¾²Ì¬±äÁ¿/ÊôÐÔµÄÖµ£¬»òÕßÖ´ÐÐÎÞ²Î¾²Ì¬·½·¨</li>
-<li>¶àÖØÊôÐÔ×ÊÔ´MultiAttributeResource:¿ÉÒÔ´æ´¢×Ô¶¨ÒåµØÊôÐÔµÄ·ÇÔËÐÐÊ±Êý¾ÝµÄ¼òµ¥¶ÔÏó</li>
+<li>è‡ªå‡å˜é‡DecVariblesï¼šæŒ‰å¸§æ›´æ–°çš„è®¡æ—¶å™¨ï¼Œå¹¶å¯ä»¥è®¾ç½®ç»“æŸå›žè°ƒ</li>
+<li>é™æ€å˜é‡ç›‘è§†å™¨StaticVaribleViewer:å¯ä»¥æŒ‰éœ€æ˜¾ç¤ºæˆ–è€…ä¿®æ”¹ç±»é™æ€å˜é‡/å±žæ€§çš„å€¼ï¼Œæˆ–è€…æ‰§è¡Œæ— å‚é™æ€æ–¹æ³•</li>
+<li>å¤šé‡å±žæ€§èµ„æºMultiAttributeResource:å¯ä»¥å­˜å‚¨è‡ªå®šä¹‰åœ°å±žæ€§çš„éžè¿è¡Œæ—¶æ•°æ®çš„ç®€å•å¯¹è±¡</li>
 </ul>
 
-## ¼Æ»®¼ÓÈë
+## è®¡åˆ’åŠ å…¥
 <ul>
-<li>Ëæ»ú³ØRandomPool£º´Ó¼òµ¥µÄÉËº¦¼ÆËãµ½¸´ÔÓµÄÕ½ÀûÆ·µôÂä¶¼¿ÉÒÔÊ¤ÈÎµÄËæ»úÊÂ¼þ´¥·¢Æ÷</li>
+<li>éšæœºæ± RandomPoolï¼šä»Žç®€å•çš„ä¼¤å®³è®¡ç®—åˆ°å¤æ‚çš„æˆ˜åˆ©å“æŽ‰è½éƒ½å¯ä»¥èƒœä»»çš„éšæœºäº‹ä»¶è§¦å‘å™¨</li>
 
-## ÆäËû
-Èç¹ûÄúÔÚÊ¹ÓÃ¹ý³ÌÖÐ·¢ÏÖÎÊÌâ»òÕß¾õµÃÓÐ¿ÉÒÔ¸Ä½øµÄµØ·½£¬¿ÉÒÔÔÚIssues°å¿éÖÐÌá³ö¡£</br>
-¹ØÓÚÎÄµµ£¬Ïê¼û[https://github.com/SuzukazeAobaLove/Better-Inspector/blob/main/Doc.md](https://github.com/SuzukazeAobaLove/Better-Inspector/blob/main/Doc.md)</br>
+## å…¶ä»–
+å¦‚æžœæ‚¨åœ¨ä½¿ç”¨è¿‡ç¨‹ä¸­å‘çŽ°é—®é¢˜æˆ–è€…è§‰å¾—æœ‰å¯ä»¥æ”¹è¿›çš„åœ°æ–¹ï¼Œå¯ä»¥åœ¨Issuesæ¿å—ä¸­æå‡ºã€‚</br>
+å…³äºŽæ–‡æ¡£ï¼Œè¯¦è§[https://github.com/SuzukazeAobaLove/Better-Inspector/blob/main/Doc.md](https://github.com/SuzukazeAobaLove/Better-Inspector/blob/main/Doc.md)</br>
 
-## ÒýÓÃ×ÊÔ´
-±¾ÏîÄ¿ÒýÓÃµÄÒ»ÇÐÍ¼±ê¾ùÀ´Ô´ÓÚ[FlatIcon](https://www.flaticon.com/ "Ãâ·ÑÍ¼±êËØ²Ä")</br>
+## å¼•ç”¨èµ„æº
+æœ¬é¡¹ç›®å¼•ç”¨çš„ä¸€åˆ‡å›¾æ ‡å‡æ¥æºäºŽ[FlatIcon](https://www.flaticon.com/ "å…è´¹å›¾æ ‡ç´ æ")</br>
+èŠ‚ç‚¹å›¾çš„ç»˜åˆ¶ä½¿ç”¨äº†[XNode](https://github.com/Siccity/xNode)</br>

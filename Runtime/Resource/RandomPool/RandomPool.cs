@@ -5,58 +5,26 @@ using UnityEngine;
 
 namespace MikanLab
 {
-    [Serializable]
-    /// <summary>
-    /// 基础节点
-    /// </summary>
-    public class BaseNode
-    {
-        public List<BaseNode> Next;
-    }
-
-    /// <summary>
-    /// 输入节点
-    /// </summary>
-    public class InputNode : BaseNode
-    {
-
-    }
-
-    /// <summary>
-    /// 输出节点
-    /// </summary>
-    public class OutputNode : BaseNode 
-    {
-
-    }
-
-    /// <summary>
-    /// 待选项节点
-    /// </summary>
-    public class ItemNode : BaseNode
-    {
-        public int ID;
-        public int Count;
-    }
-
-    /// <summary>
-    /// 连接两个节点之间的线
-    /// </summary>
-    public class Line
-    {
-        public int Weight; 
-    }
-
     [CreateAssetMenu(fileName = "RandomPool", menuName = "MikanLab/随机池")]
     /// <summary>
     /// 基本随机池
     /// </summary>
-    public class RandomPool : ScriptableObject
+    public class RandomPool : ScriptableObject,ISerializationCallbackReceiver
     {
         /// <summary>
         /// 节点池
         /// </summary>
         [SerializeReference] public List<BaseNode> NodePool = new();
+
+        /// <summary>
+        /// 运行时参数表
+        /// </summary>
+        [NonSerialized] public Dictionary<string, Parameter> Parameters = new();
+
+        /// <summary>
+        /// 序列化时参数表
+        /// </summary>
+        [SerializeField] public List<Parameter> ParametersList = new();
 
         /// <summary>
         /// 是否为计数不放回模式
@@ -68,9 +36,60 @@ namespace MikanLab
         /// </summary>
         /// <param name="attrs"></param>
         /// <returns>结果列表</returns>
-        public List<int> GetResult(params BaseAttribute[] attrs)
+        public List<int> GetResult(Parameter[] paras)
         {
-            return null;
+            //检查参数传入
+            if (paras == null) throw new ArgumentNullException("Parameters can't be Null!If the Pool Contains no Parameters,Input Empty Array");
+            if (paras.Length != Parameters.Count) throw new ArgumentException("Parameters Count don't Match!");
+            foreach (var para in paras)
+            {
+                if(Parameters.ContainsKey(para.Name))
+                {
+                    if(para.Type != Parameters[para.Name].Type)
+                    {
+                        throw new Exception("Parameters " + para.Name + " should be " + Parameters[para.Name].Type);
+                    }
+                    else
+                    {
+                        Parameters[para.Name].Value = para.Value;
+                    }
+                }
+                else
+                {
+                    throw new KeyNotFoundException("Parameters " + para.Name + " doesn't Exist!");
+                }
+            }
+
+            List<int> result = new();
+
+
+            return result;
+        }
+
+        /// <summary>
+        /// 序列化后
+        /// </summary>
+        public void OnAfterDeserialize()
+        {
+            Parameters.Clear();
+            foreach(var para in ParametersList)
+            {
+                Parameters[para.Name] = para;
+            }
+            ParametersList.Clear();
+        }
+
+        /// <summary>
+        /// 序列化前
+        /// </summary>
+        public void OnBeforeSerialize()
+        {
+            ParametersList.Clear();
+            foreach (var para in Parameters)
+            {
+                ParametersList.Add(para.Value);
+            }
+            Parameters.Clear();
         }
     }
     

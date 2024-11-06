@@ -6,13 +6,13 @@ using UnityEngine;
 namespace MikanLab
 {
     /// <summary>
-    /// ÔËĞĞ¼ÓÔØÆ÷£¬½ö¿É¶Á²»¿ÉĞ´
+    /// è¿è¡ŒåŠ è½½å™¨, çœå»äº†å‰ç¼€
     /// </summary>
     public class RuntimeLoader : MonoBehaviour
     {
         private Dictionary<string, UnityEngine.Object> resourceCache = new Dictionary<string, UnityEngine.Object>();
 
-        #region µ¥ÀıÄ£Ê½
+        #region å•ä¾‹æ¨¡å¼
         private static RuntimeLoader instance;
         public static RuntimeLoader Instance
         {
@@ -34,7 +34,7 @@ namespace MikanLab
         #endregion
 
         /// <summary>
-        /// ¼ÓÔØ×ÊÔ´
+        /// åŠ è½½èµ„æº
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="path"></param>

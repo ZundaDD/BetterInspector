@@ -2,8 +2,11 @@
   "name": "com.mikanlab.better_inspector",
   "displayName": "Better Inspector",
   "version": "1.0.0",
-  "description": "A short description of your package",
+  "description": "Add some extensions to Unity",
   "unity": "2022.3",
+  "dependencies": {
+    "https://github.com/Siccity/xNode.git" : "1.8.0"
+  },
   "author": {
     "name": "Hasekawa Mikan",
     "email": "jenxnka@gamail.com"

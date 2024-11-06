@@ -8,7 +8,7 @@ namespace MikanLab
     public class RandomPoolWindow : AssetEditor<RandomPool, RandomPoolWindow>
     {
         Texture addIcon;
-
+        Texture removeIcon;
         Vector2 pos;
         
         
@@ -38,6 +38,7 @@ namespace MikanLab
             maxSize = new Vector2(1000, 800);
             position = new Rect(100, 100, 300, 150);
 
+            removeIcon = AssetDatabase.LoadAssetAtPath<Texture>(AssetDatabase.GUIDToAssetPath("bb5dad740c04ab74283bbf37225b1146\r\n"));
             addIcon = AssetDatabase.LoadAssetAtPath<Texture>(AssetDatabase.GUIDToAssetPath("d68477f066a1ad747b274fea8dfb634e"));
         }
 

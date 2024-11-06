@@ -6,29 +6,29 @@ using UnityEngine;
 namespace MikanLab
 {
     /// <summary>
-    /// ÀàĞÍ·ÖÀà
+    /// ç±»å‹åˆ†ç±»
     /// </summary>
     public enum AttributeType
     {
-        String, Int, Float, Bool, Enum, Array
+        String, Int, Float, Bool
     }
 
     [Serializable]
     /// <summary>
-    /// µ¥¸öÊôĞÔ
+    /// å•ä¸ªå±æ€§
     /// </summary>
     public abstract class BaseAttribute
     {
 
         [SerializeField]
         /// <summary>
-        /// ÀàĞÍÃ¶¾Ù
+        /// ç±»å‹æšä¸¾
         /// </summary>
         public AttributeType typeEnum;
 
         [SerializeField]
         /// <summary>
-        /// ±äÁ¿Ãû
+        /// å˜é‡å
         /// </summary>
         public string name;
 
@@ -39,7 +39,7 @@ namespace MikanLab
     {
         [SerializeField]
         /// <summary>
-        /// Êµ¼ÊÖµ
+        /// å®é™…å€¼
         /// </summary>
         public string value;
 
@@ -58,7 +58,7 @@ namespace MikanLab
     {
         [SerializeField]
         /// <summary>
-        /// Êµ¼ÊÖµ
+        /// å®é™…å€¼
         /// </summary>
         public float value;
 
@@ -77,7 +77,7 @@ namespace MikanLab
     {
         [SerializeField]
         /// <summary>
-        /// Êµ¼ÊÖµ
+        /// å®é™…å€¼
         /// </summary>
         public int value;
 
@@ -96,7 +96,7 @@ namespace MikanLab
     {
         [SerializeField]
         /// <summary>
-        /// Êµ¼ÊÖµ
+        /// å®é™…å€¼
         /// </summary>
         public bool value;
 
