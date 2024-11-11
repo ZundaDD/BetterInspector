@@ -2,7 +2,9 @@
     "name": "MikanLab.Better Inspector.Editor",
     "rootNamespace": "",
     "references": [
-        "GUID:1f92aaf8a3d058d4c810650b4a5609c0"
+        "GUID:1f92aaf8a3d058d4c810650b4a5609c0",
+        "GUID:b8e24fd1eb19b4226afebb2810e3c19b",
+        "GUID:002c1bbed08fa44d282ef34fd5edb138"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

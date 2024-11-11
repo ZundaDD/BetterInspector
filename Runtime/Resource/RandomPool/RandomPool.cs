@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using XNode;
 
 namespace MikanLab
 {
@@ -9,13 +10,8 @@ namespace MikanLab
     /// <summary>
     /// 基本随机池
     /// </summary>
-    public class RandomPool : ScriptableObject,ISerializationCallbackReceiver
+    public class RandomPool :NodeGraph,ISerializationCallbackReceiver
     {
-        /// <summary>
-        /// 节点池
-        /// </summary>
-        [SerializeReference] public List<BaseNode> NodePool = new();
-
         /// <summary>
         /// 运行时参数表
         /// </summary>
@@ -31,6 +27,50 @@ namespace MikanLab
         /// </summary>
         public bool CountMode = false;
 
+        /// <summary>
+        /// 图有效性检测
+        /// </summary>
+        private void OnEnable()
+        {
+            
+            bool ifInput = false, ifOutput = false;
+            for (int i = 0; i < nodes.Count; ++i)
+            {
+                var node = nodes[i];
+                if (node is InputNode)
+                {
+                    if (!ifInput) ifInput = true;
+                    else
+                    {
+                        Debug.LogError("图存在多个输入节点，仅保留第一个");
+                        RemoveNode(node);
+                        i--;
+                    }
+                }
+                if (node is OutputNode)
+                {
+                    if (!ifOutput) ifOutput = true;
+                    else
+                    {
+                        Debug.LogError("图存在多个输出节点，仅保留第一个");
+                        RemoveNode(node);
+                        i--;
+                    }
+                }
+            }
+            if (!ifInput)
+            {
+                var node = AddNode(typeof(InputNode));
+                node.name = "Input";
+            }
+            if (!ifOutput)
+            {
+                var node = AddNode(typeof(OutputNode));
+                node.name = "Output";
+            }
+        }
+
+        
         /// <summary>
         /// 获取结果
         /// </summary>

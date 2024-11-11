@@ -13,8 +13,10 @@ namespace MikanLab
             EditorGUILayout.HelpBox("此处仅供查看，如要编辑请在编辑器中进行！", MessageType.Warning);
             if (GUILayout.Button("在编辑器中打开"))
             {
-                RandomPoolWindow.ShowWindow(serializedObject.targetObject as RandomPool);
+                RandomPoolWindow.InvokeWindow(serializedObject.targetObject as RandomPool);
             }
+            GUI.enabled = false;
+            base.OnInspectorGUI();
         }
     }
 }

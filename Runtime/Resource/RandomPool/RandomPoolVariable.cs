@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using XNode;
 
 namespace MikanLab
 {
@@ -40,28 +41,19 @@ namespace MikanLab
         }
     }
 
-    [Serializable]
-    /// <summary>
-    /// 基础节点
-    /// </summary>
-    public class BaseNode
-    {
-        public List<BaseNode> Next;
-        public int Level;
-    }
 
     /// <summary>
     /// 输入节点
     /// </summary>
-    public class InputNode : BaseNode
+    public class InputNode : Node
     {
-
+        [Output] public List<Parameter> Input;
     }
 
     /// <summary>
     /// 输出节点
     /// </summary>
-    public class OutputNode : BaseNode
+    public class OutputNode : Node
     {
 
     }
@@ -69,7 +61,7 @@ namespace MikanLab
     /// <summary>
     /// 待选项节点
     /// </summary>
-    public class ItemNode : BaseNode
+    public class ItemNode : Node
     {
         public int ID;
         public int Count;
@@ -78,7 +70,7 @@ namespace MikanLab
     /// <summary>
     /// 修饰节点
     /// </summary>
-    public class ModifyNode : BaseNode
+    public class ModifyNode : Node
     {
 
     }
@@ -86,7 +78,7 @@ namespace MikanLab
     /// <summary>
     /// 条件节点
     /// </summary>
-    public class ConditionNode : BaseNode
+    public class ConditionNode : Node
     {
 
     }
