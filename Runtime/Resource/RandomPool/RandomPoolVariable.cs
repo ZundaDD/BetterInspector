@@ -41,7 +41,7 @@ namespace MikanLab
         }
     }
 
-
+    [DisallowMultipleNodes(1)]
     /// <summary>
     /// 输入节点
     /// </summary>
@@ -50,6 +50,7 @@ namespace MikanLab
         [Output] public List<Parameter> Input;
     }
 
+    [DisallowMultipleNodes(1)]
     /// <summary>
     /// 输出节点
     /// </summary>

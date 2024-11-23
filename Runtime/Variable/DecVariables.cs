@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace MikanLab
 {
@@ -145,6 +146,69 @@ namespace MikanLab
             if (length < 0) throw new ArgumentOutOfRangeException($"{length} is negative");
             Lengthen((uint)(length / Time.fixedDeltaTime));
         }
+
+        public void Update() { }
+    }
+
+    [Serializable]
+    /// <summary>
+    /// 按帧自减，在归零时调用绑定委托
+    /// </summary>
+    public class FixedUInt : ILifeCycle
+    {
+        /// <summary>
+        /// 计时器
+        /// </summary>
+        [SerializeField] private uint frameCount = 0;
+
+        /// <summary>
+        /// 物体引用
+        /// </summary>
+        private GameObject owner;
+
+        /// <summary>
+        /// 固定时长
+        /// </summary>
+        [SerializeField] private uint fixedFrame = 0;
+        
+        public FixedUInt(GameObject owner, uint fixedFrame)
+        {
+            this.owner = owner;
+            this.fixedFrame = fixedFrame;
+        }
+
+        public FixedUInt(GameObject owner, float fixedFrame)
+        {
+            if(fixedFrame < 0) throw new ArgumentOutOfRangeException($"{fixedFrame} is negative");
+            this.owner = owner;
+            this.fixedFrame = (uint)(fixedFrame / Time.fixedDeltaTime);
+        }
+
+        public uint Value => frameCount;
+
+        public void FixedUpdate()
+        {
+            frameCount--;
+        }
+
+        public void ResetFixedFrame(uint fixedFrame)
+        {
+            this.fixedFrame = fixedFrame;
+        }
+
+        public void ResetFixedFrame(float fixedFrame)
+        {
+            if (fixedFrame < 0) throw new ArgumentOutOfRangeException($"{fixedFrame} is negative");
+            ResetFixedFrame((uint)(fixedFrame / Time.fixedDeltaTime));
+        }
+
+        public void Set()
+        {
+            if (frameCount == 0) LifeCycle.Instance.Register(this);
+            frameCount = fixedFrame;
+        }
+
+        public bool IfDelete() { return frameCount == 0 || owner == null; }
 
         public void Update() { }
     }

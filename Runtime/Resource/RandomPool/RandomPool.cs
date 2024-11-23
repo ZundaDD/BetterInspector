@@ -3,9 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using XNode;
+using static UnityEngine.GraphicsBuffer;
 
 namespace MikanLab
 {
+    [RequireNode(typeof(InputNode))]
+    [RequireNode(typeof(OutputNode))]
     [CreateAssetMenu(fileName = "RandomPool", menuName = "MikanLab/随机池")]
     /// <summary>
     /// 基本随机池
@@ -26,50 +29,6 @@ namespace MikanLab
         /// 是否为计数不放回模式
         /// </summary>
         public bool CountMode = false;
-
-        /// <summary>
-        /// 图有效性检测
-        /// </summary>
-        private void OnEnable()
-        {
-            
-            bool ifInput = false, ifOutput = false;
-            for (int i = 0; i < nodes.Count; ++i)
-            {
-                var node = nodes[i];
-                if (node is InputNode)
-                {
-                    if (!ifInput) ifInput = true;
-                    else
-                    {
-                        Debug.LogError("图存在多个输入节点，仅保留第一个");
-                        RemoveNode(node);
-                        i--;
-                    }
-                }
-                if (node is OutputNode)
-                {
-                    if (!ifOutput) ifOutput = true;
-                    else
-                    {
-                        Debug.LogError("图存在多个输出节点，仅保留第一个");
-                        RemoveNode(node);
-                        i--;
-                    }
-                }
-            }
-            if (!ifInput)
-            {
-                var node = AddNode(typeof(InputNode));
-                node.name = "Input";
-            }
-            if (!ifOutput)
-            {
-                var node = AddNode(typeof(OutputNode));
-                node.name = "Output";
-            }
-        }
-
         
         /// <summary>
         /// 获取结果
