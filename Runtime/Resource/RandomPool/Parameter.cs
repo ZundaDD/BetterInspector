@@ -1,8 +1,6 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using XNode;
+using UnityEditor.Experimental.GraphView;
 
 namespace MikanLab
 {
@@ -20,7 +18,7 @@ namespace MikanLab
         public string Name;
         public ParameterType Type;
         [NonSerialized] public object Value;
-        public Parameter(string name,object value)
+        public Parameter(string name, object value)
         {
             Name = name;
             Value = value;
@@ -39,49 +37,6 @@ namespace MikanLab
             }
             else throw new Exception("Invalid Parameter Type!");
         }
-    }
-
-    [DisallowMultipleNodes(1)]
-    /// <summary>
-    /// 输入节点
-    /// </summary>
-    public class InputNode : Node
-    {
-        [Output] public List<Parameter> Input;
-    }
-
-    [DisallowMultipleNodes(1)]
-    /// <summary>
-    /// 输出节点
-    /// </summary>
-    public class OutputNode : Node
-    {
-
-    }
-
-    /// <summary>
-    /// 待选项节点
-    /// </summary>
-    public class ItemNode : Node
-    {
-        public int ID;
-        public int Count;
-    }
-
-    /// <summary>
-    /// 修饰节点
-    /// </summary>
-    public class ModifyNode : Node
-    {
-
-    }
-
-    /// <summary>
-    /// 条件节点
-    /// </summary>
-    public class ConditionNode : Node
-    {
-
     }
 
 }

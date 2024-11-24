@@ -1,20 +1,18 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using XNode;
 using static UnityEngine.GraphicsBuffer;
 
 namespace MikanLab
 {
-    [RequireNode(typeof(InputNode))]
-    [RequireNode(typeof(OutputNode))]
+    [CountLimit(NodeType = typeof(RootNode), Min = 1, Max = 1)]
     [CreateAssetMenu(fileName = "RandomPool", menuName = "MikanLab/随机池")]
     /// <summary>
     /// 基本随机池
     /// </summary>
-    public class RandomPool :NodeGraph,ISerializationCallbackReceiver
+    public class RandomPool : NodeGraph, ISerializationCallbackReceiver
     {
+        #region 参数
         /// <summary>
         /// 运行时参数表
         /// </summary>
@@ -24,12 +22,13 @@ namespace MikanLab
         /// 序列化时参数表
         /// </summary>
         [SerializeField] public List<Parameter> ParametersList = new();
+        #endregion
 
         /// <summary>
         /// 是否为计数不放回模式
         /// </summary>
         public bool CountMode = false;
-        
+
         /// <summary>
         /// 获取结果
         /// </summary>
@@ -42,9 +41,9 @@ namespace MikanLab
             if (paras.Length != Parameters.Count) throw new ArgumentException("Parameters Count don't Match!");
             foreach (var para in paras)
             {
-                if(Parameters.ContainsKey(para.Name))
+                if (Parameters.ContainsKey(para.Name))
                 {
-                    if(para.Type != Parameters[para.Name].Type)
+                    if (para.Type != Parameters[para.Name].Type)
                     {
                         throw new Exception("Parameters " + para.Name + " should be " + Parameters[para.Name].Type);
                     }
@@ -64,14 +63,16 @@ namespace MikanLab
 
             return result;
         }
+        
 
+        #region 序列化
         /// <summary>
         /// 序列化后
         /// </summary>
         public void OnAfterDeserialize()
         {
             Parameters.Clear();
-            foreach(var para in ParametersList)
+            foreach (var para in ParametersList)
             {
                 Parameters[para.Name] = para;
             }
@@ -90,6 +91,6 @@ namespace MikanLab
             }
             Parameters.Clear();
         }
+        #endregion
     }
-    
 }
