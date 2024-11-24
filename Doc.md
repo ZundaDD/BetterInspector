@@ -1,10 +1,17 @@
 # 目录
-[1.变量](#Variable)</br>
-[2.资源文件](#ResourceAsset)</br>
-[3.属性](#Attribute)</br>
+[1.时间控制](#TimeVariable)</br>
+[2.多重资源管理器](#MultiAttributeResource)</br>
+[3.节点图基础](#BaseNodeGraph)</br>
+[4.静态对象调试](#StaticDebug)</br>
 
 ---
-## 变量<a name="Variable"></a>
+## 1.时间控制<a name="TimeVariable"></a>
+
+### 生命循环器
+生命控制器是时间控制的承载者，通过LifeCycle的单例可以挂载实现了ILifeCycle接口的对象，无论其是否继承自**MonoBehaviour**
+</br>
+LifeCycle将提供绘画帧更新和物理帧更新的函数调用，并且在达成条件时自动将对象移出监管列表。
+</br></br>
 
 ### 计时器变量
 DecUInt是一个实现了ILifeCycle的变量，它是对UInt的一层封装，并在每一个物理帧自减。
@@ -33,8 +40,11 @@ foo.Trigger();
 ```
 </br></br>
 
+### 延时委托(重构中)
+</br></br>
+
 ---
-## 资源文件<a name ="ResourceAsset"></a>
+## 2.多重资源属性<a name ="MultiAttributeResource"></a>
 
 ### 多重属性资源
 MultiAttributeResource是一个继承自ScriptObject的资源文件，它可以包含若干个String、Int、Bool、Float变量。
@@ -43,8 +53,32 @@ MultiAttributeResource是一个继承自ScriptObject的资源文件，它可以�
 在Inspector中只能查看它包含的属性，如果需要编辑，请在MikanLab/多重属性资源编辑器界面中进行。
 </br></br>
 
+---
+## 3.节点图基础<a name ="BaseNodeGraph"></a>
+
+### 节点图资源
+NodeGraph是节点图基类，存储了节点的信息，包括每一个节点的位置、类型以及连接状况。
+</br>
+使用Execute方法进行遍历，这需要您自己定义遍历的方式。
+</br></br>
+
+### 可视化编辑
+节点图采用GraphView进行可视化编辑,NodeGraphElement是对GraphView的一层封装，提供了从文件到视图和从视图到文件的转换
+</br>
+允许右键创建新的节点，通过SearchTree进行，具体的搜索方式见下文。
+</br></br>
+
+### 节点属性
+[UniversalUsed]表示该节点及其所有继承类永远会被搜索到。
+</br>
+[UsedFor]表示该节点及其继承类（可选）会被指定的节点图资源类型搜索到。
+
+### 节点图属性
+[CountLimit]表示该节点图中指定类型的节点的数量应该在Min-Max之间，数量 < Min值将会自动添加，>= Max值将无法被搜索到。
+</br></br>
+
 ### 随机表（施工中）
-RandomPool是一个继承自ScriptObject的资源文件，它利用节点图的形式表现一个随机过程的输入、判断、随机生成以及输出</br>
+RandomPool是一个继承自NodeGraph的资源文件，它利用节点图的形式表现一个随机过程的输入、判断、随机生成以及输出</br>
 其中，节点的类别分为
 
 <ul>
@@ -73,11 +107,14 @@ RandomPool是一个继承自ScriptObject的资源文件，它利用节点图的�
 </br></br>
 
 ---
-## 属性<a name ="Attribute"></a>
+## 4.静态对象调试<a name ="StaticDebug"></a>
 
-### 静态变量监听
-打上[TrackStatic]的类将纳入静态变量监视列表，类中的静态对象可以在KikanLab/静态变量监视器中查看。
-</br>
+### 标记类
+打上[TrackStatic]的类将纳入静态变量监视列表，类中的静态对象可以在MikanLab/静态变量监视器中查看。
+注意，类带有[TrackStatic]特性是被监视的先决条件，如何没有此特性，就算给静态成员施以对应特性也不会加入监视列表中。
+</br></br>
+
+### 标记成员
 对于静态字段和静态属性，打上[EditableStatic]将显示可编辑的数值，打上[ReadonlyStatic]将显示仅可读的数值。
 对于静态方法，只有没有参数的静态方法可以打上[VoidStaticMethod]，此时可以在监听器中通过按钮进行显式调用。
 </br></br>

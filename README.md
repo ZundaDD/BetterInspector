@@ -17,4 +17,3 @@
 
 ## 引用资源
 本项目引用的一切图标均来源于[FlatIcon](https://www.flaticon.com/ "免费图标素材")</br>
-节点图的绘制使用了[XNode](https://github.com/Siccity/xNode)</br>

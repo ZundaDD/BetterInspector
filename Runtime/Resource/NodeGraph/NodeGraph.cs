@@ -39,4 +39,6 @@ public class NodeGraph : ScriptableObject
             }
         }
     }
+
+    public virtual void Execute() { }
 }
