@@ -1,44 +1,47 @@
 using MikanLab;
-using System.Collections;
+using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using UnityEngine;
 
-public class NodeGraph : ScriptableObject
+namespace MikanLab
 {
-    #region 序列化
     /// <summary>
-    /// 节点列表
+    /// 最基本的节点图
     /// </summary>
-    [SerializeField] public List<NodeData> NodeList = new();
-    #endregion
-
-    public virtual void OnEnable()
+    public class NodeGraph : ScriptableObject
     {
-        MeetNodeLimit();
-    }
+        #region 序列化
+        /// <summary>
+        /// 节点列表
+        /// </summary>
+        [SerializeReference] public List<BaseNode> NodeList = new();
+        #endregion
 
-    /// <summary>
-    /// 满足节点最少数量需求
-    /// </summary>
-    public virtual void MeetNodeLimit()
-    {
-        foreach (var attr in GetType().GetCustomAttributes(typeof(CountLimitAttribute), true))
+        /// <summary>
+        /// 满足节点最少数量需求
+        /// </summary>
+        public virtual void MeetNodeLimit()
         {
-            uint i = 0, tar = (attr as CountLimitAttribute).Min;
-            string tarName = (attr as CountLimitAttribute).NodeType.AssemblyQualifiedName;
+            foreach (var attr in GetType().GetCustomAttributes(typeof(CountLimitAttribute), true))
+            {
+                uint i = 0, tarMin = (attr as CountLimitAttribute).Min;
+                string tarName = (attr as CountLimitAttribute).NodeType.AssemblyQualifiedName;
+                Type tarType = (attr as CountLimitAttribute).NodeType;
 
-            foreach (var node in NodeList)
-            {
-                if (node.TypeName == tarName) i++;
-            }
-            if (i < tar)
-            {
-                NodeList.Add(new() { TypeName = tarName, Position = new((tar - i) * 100f, 0f) });
-                i++;
+                foreach (var node in NodeList)
+                {
+                    if (tarType.AssemblyQualifiedName == tarName) i++;
+                }
+                if (i < tarMin)
+                {
+                    var node = BaseNode.CreateNode(tarType);
+                    node.Position = new((tarMin - i) * 100f, 0f);
+                    NodeList.Add(node);
+                    i++;
+                }
             }
         }
-    }
 
-    public virtual void Execute() { }
+        public virtual void Execute() { }
+    }
 }

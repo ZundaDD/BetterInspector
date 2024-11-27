@@ -17,21 +17,7 @@ namespace MikanLab
         
         public override void Execute()
         {
-            var rootEdge = root.OutputPort.connections.FirstOrDefault();
-            if (rootEdge == null) return;
-
-            var currentNode = rootEdge.input.node as GraphNode;
-
-            while (true)
-            {
-                currentNode.Execute();
-
-                if(currentNode.OutputPort == null) break;
-                var edge = currentNode.OutputPort.connections.FirstOrDefault();
-                if (edge == null) break;
-
-                currentNode = edge.input.node as GraphNode;
-            }
+            
         }
     }
 }

@@ -1,53 +1,10 @@
-using System.Linq;
-using UnityEngine;
-using UnityEditor.Experimental.GraphView;
-using UnityEngine.UIElements;
 using System;
 
 namespace MikanLab
 {
-    [UniversalUsed]
     [Serializable]
-    public abstract class BaseNode : Node
-    {
-        public Port AddInputPort(Type portType, string portName = "", bool ifMultiple = false)
-        {
-            if (portName == "") portName = portType.Name;
-            foreach (var Port in inputContainer.Children())
-            {
-                if ((Port as Port).portName == portName)
-                {
-                    Debug.LogError($"端口名称重复：{portName}，操作中止");
-                    return null;
-                }
-            }
-            var inputPort = Port.Create<Edge>(Orientation.Horizontal, Direction.Input, ifMultiple ? Port.Capacity.Multi : Port.Capacity.Single, portType);
-            inputPort.portName = portName;
-            inputContainer.Add(inputPort);
-            return inputPort;
-        }
-
-        public Port AddOutputPort(Type portType, string portName = "", bool ifMultiple = false)
-        {
-            if (portName == "") portName = portType.Name;
-            foreach (var Port in outputContainer.Children())
-            {
-                if ((Port as Port).portName == portName)
-                {
-                    Debug.LogError($"端口名称重复：{portName}，操作中止");
-                    return null;
-                }
-            }
-            var outputPort = Port.Create<Edge>(Orientation.Horizontal, Direction.Output, ifMultiple ? Port.Capacity.Multi : Port.Capacity.Single, portType);
-            outputPort.portName = portName;
-            outputContainer.Add(outputPort);
-            return outputPort;
-        }
-    }
     public abstract class GraphNode : BaseNode
     {
-        public Port InputPort;
-        public Port OutputPort;
 
         public GraphNode()
         {
@@ -55,53 +12,42 @@ namespace MikanLab
             AddOutputPort(typeof(string), "Out");
         }
 
-        public abstract void Execute();
     }
+
+    [Serializable]
     public class LogNode : GraphNode
     {
-        private Port inputString;
-        public LogNode() : base()
+        public LogNode()
         {
-            title = "Log";
+            NodeName = "Log";
 
             AddInputPort(typeof(string));
         }
-        public override void Execute()
-        {
-            var edge = inputString.connections.FirstOrDefault();
-            var node = edge.output.node as StringNode;
-
-            if (node == null) return;
-
-            Debug.Log(node.Text);
-        }
     }
+
+    [Serializable]
     public class StringNode : BaseNode
     {
-        private TextField textField;
-        public string Text { get { return textField.value; } }
+        
+        public string Ts;
+        
 
-        public StringNode() : base()
+        public StringNode()
         {
-            title = "String";
+            NodeName = "String";
 
             AddOutputPort(typeof(string));
-
-            textField = new TextField();
-            mainContainer.Add(textField);
         }
+
     }
 
+    [Serializable]
     public class RootNode : BaseNode
     {
-        public Port OutputPort;
 
-        public RootNode() : base()
+        public RootNode()
         {
-            title = "Root";
-
-            capabilities -= Capabilities.Deletable;
-
+            NodeName = "Root";
             AddOutputPort(typeof(string), "Out");
         }
     }

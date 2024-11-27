@@ -18,7 +18,7 @@ namespace MikanLab
         List<SearchTreeEntry> ISearchWindowProvider.CreateSearchTree(SearchWindowContext context)
         {
             var entries = new List<SearchTreeEntry>();
-            var limitDict = GraphUtilities.GetGraphLimit(typeof(RandomPool));
+            var limitDict = GraphUtilities.GetGraphLimit(graphView.GetType());
 
             entries.Add(new SearchTreeGroupEntry(new GUIContent("Create Node")));
 
@@ -41,11 +41,12 @@ namespace MikanLab
         bool ISearchWindowProvider.OnSelectEntry(SearchTreeEntry searchTreeEntry, SearchWindowContext context)
         {
             var type = searchTreeEntry.userData as System.Type;
-            var node = Activator.CreateInstance(type) as BaseNode;
+            var node = new VisualNode(BaseNode.CreateNode(type));
 
             graphView.AddElement(node);
-            if (!graphView.nodeCache.ContainsKey(node.GetType())) graphView.nodeCache.Add(node.GetType(), 0);
-            graphView.nodeCache[node.GetType()]++;
+
+            if (!graphView.nodeCache.ContainsKey(type)) graphView.nodeCache.Add(type, 0);
+            graphView.nodeCache[type]++;
             
             return true;
         }

@@ -1,8 +1,5 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
-using UnityEngine;
 
 namespace MikanLab
 {
@@ -19,7 +16,7 @@ namespace MikanLab
         /// <summary>
         /// 获取节点图可添加的节点
         /// </summary>
-        /// <param name="type"></param>
+        /// <param name="type">节点图类型</param>
         /// <returns></returns>
         public static List<Type> GetGraphValideNode(System.Type type)
         {
@@ -31,6 +28,11 @@ namespace MikanLab
             return graphNodes[type];
         }
 
+        /// <summary>
+        /// 获取节点图的节点个数限制
+        /// </summary>
+        /// <param name="type">节点图类型</param>
+        /// <returns></returns>
         public static Dictionary<System.Type, uint> GetGraphLimit(System.Type type)
         {
             if (nodeMax == null) nodeMax = new();
@@ -47,7 +49,7 @@ namespace MikanLab
         /// <summary>
         /// 寻找节点图可添加的节点
         /// </summary>
-        /// <param name="type"></param>
+        /// <param name="type">节点图类型</param>
         private static void SearchNode(System.Type type)
         {
             if (allNodes == null) SearchAllNode();
