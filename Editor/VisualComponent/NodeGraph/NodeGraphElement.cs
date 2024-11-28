@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -8,14 +9,20 @@ namespace MikanLab
 {
     public class NodeGraphElement : GraphView
     {
-        protected NodeGraph target;
+        protected List<VisualNode> vnodeList = new();
+        public NodeGraph target;
+        protected SerializedObject s_target;
+        protected SerializedProperty s_nodes;
         public Dictionary<Type, int> nodeCache = new();
 
         //配置部分
         public NodeGraphElement(NodeGraph target) : base()
         {
-            this.target = target;
             target.MeetNodeLimit();
+            this.target = target;
+            this.s_target = new(target);
+            this.s_nodes = s_target.FindProperty("NodeList");
+            
 
             //交互操作
             this.AddManipulator(new SelectionDragger());
@@ -53,17 +60,16 @@ namespace MikanLab
         /// </summary>
         public void LoadFromAsset()
         {
-            List<Node> indexs = new();
 
             for (int i = 0; i < target.NodeList.Count; ++i)
             {
                 var node = target.NodeList[i];
-                var visualNode = new VisualNode(node);
+                var visualNode = new VisualNode(node,s_nodes.GetArrayElementAtIndex(i));
 
                 AddElement(visualNode);
-                indexs.Add(visualNode);
                 if (!nodeCache.ContainsKey(visualNode.Type)) nodeCache.Add(visualNode.Type, 0);
                 nodeCache[visualNode.Type]++;
+                vnodeList.Add(visualNode);
 
                 visualNode.SetPosition(new Rect(node.Position, new Vector2(100f, 200f)));
             }
@@ -73,8 +79,8 @@ namespace MikanLab
                 foreach (var edge in target.NodeList[i].EdgeList)
                 {
 
-                    Port inputPort = indexs[edge.TargetIndex].inputContainer.Query<Port>().Where(e => e.portName == edge.TargetPortName).First();
-                    Port outputPort = indexs[i].outputContainer.Query<Port>().Where(e => e.portName == edge.ThisPortName).First();
+                    Port inputPort = vnodeList[edge.TargetIndex].inputContainer.Query<Port>().Where(e => e.portName == edge.TargetPortName).First();
+                    Port outputPort = vnodeList[i].outputContainer.Query<Port>().Where(e => e.portName == edge.ThisPortName).First();
 
                     if (inputPort != null && outputPort != null)
                     {
@@ -105,6 +111,9 @@ namespace MikanLab
         /// </summary>
         public void SaveChangeToAsset()
         {
+            s_target.Update();
+            s_target.ApplyModifiedProperties();
+
             Dictionary<Node, int> indexs = new();
             target.NodeList.Clear();
 
@@ -129,6 +138,35 @@ namespace MikanLab
 
                 target.NodeList[indexs[edge.output.node]].EdgeList.Add(data);
             }
+        }
+
+        public virtual void AddNewNode(Type nodeType)
+        {
+            //保存之前的更改
+            s_target.Update();
+            s_target.ApplyModifiedProperties();
+            
+            //添加新的显示节点到资源文件中
+            var newnode = BaseNode.CreateNode(nodeType);
+            target.NodeList.Add(newnode);
+
+            //重新序列化
+            s_target = new(target);
+            s_nodes = s_target.FindProperty("NodeList");
+            for (int i = 0; i < vnodeList.Count; ++i)
+            {
+                vnodeList[i].serializedProperty = s_nodes.GetArrayElementAtIndex(i);
+                vnodeList[i].extensionContainer.Clear();
+                vnodeList[i].DrawNode();
+            }
+            
+            //添加新的显示节点
+            var node = new VisualNode(newnode,s_nodes.GetArrayElementAtIndex(vnodeList.Count));
+            AddElement(node);
+
+            //记录类型数量
+            if (!nodeCache.ContainsKey(nodeType)) nodeCache.Add(nodeType, 0);
+            nodeCache[nodeType]++;
         }
 
         public virtual void Execute() { }

@@ -5,6 +5,7 @@ using UnityEngine;
 
 namespace MikanLab
 {
+    [Serializable]
     /// <summary>
     /// 最基本的节点图
     /// </summary>

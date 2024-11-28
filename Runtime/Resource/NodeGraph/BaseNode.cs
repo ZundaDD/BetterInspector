@@ -39,7 +39,8 @@ namespace MikanLab
         [SerializeField] public string NodeName = "";
         [SerializeField] public List <EdgeData> EdgeList = new();
         [SerializeField] public Vector2 Position = new(0, 0);
-        
+        [SerializeField] public bool Deleteable = true;
+
         public void AddInputPort(Type portType, string portName = "", bool ifMultiple = false)
         {
             if (portName == "") portName = portType.Name;

@@ -47,6 +47,7 @@ namespace MikanLab
 
         public RootNode()
         {
+            Deleteable = false;
             NodeName = "Root";
             AddOutputPort(typeof(string), "Out");
         }
