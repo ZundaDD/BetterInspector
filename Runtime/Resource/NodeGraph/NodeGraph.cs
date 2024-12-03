@@ -43,6 +43,11 @@ namespace MikanLab
             }
         }
 
+        public void OnEnable()
+        {
+            foreach (var node in NodeList) node.Owner = this;    
+        }
+
         public virtual void Execute() { }
     }
 }

@@ -28,7 +28,12 @@ namespace MikanLab
                 if (limitDict.ContainsKey(nodeType))
                 {
                     uint maxLimit = limitDict[nodeType];
-                    uint curCount = (uint)graphView.nodeCache[nodeType];
+                    uint curCount = 0;
+                    if(graphView.nodeCache.ContainsKey(nodeType))
+                    {
+                        curCount = (uint)graphView.nodeCache[nodeType];
+                    }
+                    
                     if (maxLimit != 0 && curCount >= maxLimit) continue;
                 }
 

@@ -4,7 +4,8 @@ using UnityEngine;
 
 namespace MikanLab
 {
-    [CountLimit(NodeType = typeof(RootNode), Min = 1, Max = 1)]
+    [CountLimit(NodeType = typeof(Input), Min = 1, Max = 1)]
+    [CountLimit(NodeType = typeof(Output),Min = 1, Max = 1)]
     [CreateAssetMenu(fileName = "RandomPool", menuName = "MikanLab/随机池")]
     /// <summary>
     /// 基本随机池

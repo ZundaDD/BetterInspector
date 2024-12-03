@@ -9,6 +9,7 @@ namespace MikanLab
 {
     public class NodeGraphElement : GraphView
     {
+        
         protected List<VisualNode> vnodeList = new();
         public NodeGraph target;
         protected SerializedObject s_target;
@@ -76,31 +77,34 @@ namespace MikanLab
 
             for (int i = 0; i < target.NodeList.Count; ++i)
             {
-                foreach (var edge in target.NodeList[i].EdgeList)
+                foreach (var edges in target.NodeList[i].OutputPorts)
                 {
-
-                    Port inputPort = vnodeList[edge.TargetIndex].inputContainer.Query<Port>().Where(e => e.portName == edge.TargetPortName).First();
-                    Port outputPort = vnodeList[i].outputContainer.Query<Port>().Where(e => e.portName == edge.ThisPortName).First();
-
-                    if (inputPort != null && outputPort != null)
+                    Port outputPort = vnodeList[i].outputContainer.Query<Port>().Where(e => e.portName == edges.Key).First();
+                    foreach (var edge in edges.Value.Edges)
                     {
-                        // 创建边
-                        Edge visualEdge = new Edge();
+                        Port inputPort = vnodeList[edge.TargetIndex].inputContainer.Query<Port>().Where(e => e.portName == edge.TargetPortName).First();
 
-                        // 连接端口
-                        visualEdge.input = inputPort;
-                        visualEdge.output = outputPort;
 
-                        // 将边添加到 GraphView
-                        AddElement(visualEdge);
+                        if (inputPort != null && outputPort != null)
+                        {
+                            // 创建边
+                            Edge visualEdge = new Edge();
 
-                        // 更新端口连接状态 (可选，但推荐)
-                        inputPort.Connect(visualEdge);
-                        outputPort.Connect(visualEdge);
-                    }
-                    else
-                    {
-                        throw new("Could not find ports to connect.");
+                            // 连接端口
+                            visualEdge.input = inputPort;
+                            visualEdge.output = outputPort;
+
+                            // 将边添加到 GraphView
+                            AddElement(visualEdge);
+
+                            // 更新端口连接状态 (可选，但推荐)
+                            inputPort.Connect(visualEdge);
+                            outputPort.Connect(visualEdge);
+                        }
+                        else
+                        {
+                            throw new("Could not find ports to connect.");
+                        }
                     }
                 }
             }
@@ -122,7 +126,9 @@ namespace MikanLab
                 var preData = (node as VisualNode).Data;
                 preData.NodeName = node.title;
                 preData.Position = node.GetPosition().position;
-                preData.EdgeList.Clear();
+
+                foreach(var outport in preData.OutputPorts) outport.Value.Edges.Clear();
+                foreach(var inport in preData.InputPorts) inport.Value.Edges.Clear();
 
                 target.NodeList.Add(preData);
                 indexs[node] = target.NodeList.Count - 1;
@@ -130,13 +136,20 @@ namespace MikanLab
 
             foreach (var edge in edges)
             {
-                var data = new BaseNode.EdgeData();
+                var outdata = new BaseNode.EdgeData();
+                var indata = new BaseNode.EdgeData();
 
-                data.TargetPortName = edge.input.portName;
-                data.TargetIndex = indexs[edge.input.node];
-                data.ThisPortName = edge.output.portName;
+                outdata.TargetPortName = edge.input.portName;
+                outdata.TargetIndex = indexs[edge.input.node];
 
-                target.NodeList[indexs[edge.output.node]].EdgeList.Add(data);
+                indata.TargetPortName = edge.output.portName;
+                indata.TargetIndex = indexs[edge.output.node];
+
+                var outnode = target.NodeList[indexs[edge.output.node]];
+                var innode = target.NodeList[indexs[edge.input.node]];
+
+                outnode.OutputPorts[edge.output.portName].Edges.Add(outdata);
+                innode.InputPorts[edge.input.portName].Edges.Add(indata);
             }
         }
 

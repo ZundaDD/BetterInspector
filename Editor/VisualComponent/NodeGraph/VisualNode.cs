@@ -17,22 +17,22 @@ namespace MikanLab
             Data = data;
             title = Data.NodeName;
             if (!Data.Deleteable) capabilities -= Capabilities.Deletable;
-            foreach (var inputPort in data.InputPorts) AddInputPort(inputPort);
-            foreach (var outputPort in data.OutputPorts) AddOutputPort(outputPort);
+            foreach (var inputPort in data.InputPorts) AddInputPort(inputPort.Key,inputPort.Value);
+            foreach (var outputPort in data.OutputPorts) AddOutputPort(outputPort.Key,outputPort.Value);
             DrawNode();
         }
 
-        public void AddInputPort(BaseNode.PortData pd)
+        public void AddInputPort(string name,BaseNode.PortData pd)
         {
-            var inputPort = Port.Create<Edge>(Orientation.Horizontal, Direction.Input, pd.AllowMultiple ? Port.Capacity.Multi : Port.Capacity.Single, pd.PortType);
-            inputPort.portName = pd.PortName;
+            var inputPort = Port.Create<Edge>(Orientation.Horizontal, Direction.Input, pd.AllowMultiple ? Port.Capacity.Multi : Port.Capacity.Single, Type.GetType(pd.PortType));
+            inputPort.portName = name;
             inputContainer.Add(inputPort);
         }
 
-        public void AddOutputPort(BaseNode.PortData pd)
+        public void AddOutputPort(string name,BaseNode.PortData pd)
         {
-            var outputPort = Port.Create<Edge>(Orientation.Horizontal, Direction.Output, pd.AllowMultiple ? Port.Capacity.Multi : Port.Capacity.Single, pd.PortType);
-            outputPort.portName = pd.PortName;
+            var outputPort = Port.Create<Edge>(Orientation.Horizontal, Direction.Output, pd.AllowMultiple ? Port.Capacity.Multi : Port.Capacity.Single, Type.GetType(pd.PortType));
+            outputPort.portName = name;
             outputContainer.Add(outputPort);
         }
 

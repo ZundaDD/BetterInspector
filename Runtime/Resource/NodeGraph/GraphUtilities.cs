@@ -66,7 +66,7 @@ namespace MikanLab
                 {
                     var attrs = attr as UsedForAttribute;
                     if (!attrs.AllowInherit && attrs.GraphType != type) continue;
-                    if (attrs.AllowInherit && !type.IsSubclassOf(attrs.GraphType)) continue;
+                    if (attrs.AllowInherit && type != attrs.GraphType && !type.IsSubclassOf(attrs.GraphType)) continue;
                     graphNodes[type].Add(node);
                 }
             }
