@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEditor;
 using UnityEngine.UIElements;
 using System;
+using UnityEditor.PackageManager.UI;
 
 namespace MikanLab
 {
@@ -9,6 +10,8 @@ namespace MikanLab
     {
         private static readonly string prefKey = "MikanLab_RandomPoolWindow";
         private bool isOpenPropertyWindow = false;
+        private bool ifInited = false;
+        private bool ifFirst = true;
         private RandomPool target;
         private Setting setting;
 
@@ -28,12 +31,29 @@ namespace MikanLab
         public static void Invoke(RandomPool target)
         {
             var window = GetWindow<RandomPoolWindow>("RandomPoolWindow");
-            window.target = target;
+            if (!window.ifInited)
+            {
+                window.target = target;
+                if (!EditorPrefs.HasKey(prefKey)) window.setting = new();
+                else window.setting = JsonUtility.FromJson<Setting>(EditorPrefs.GetString(prefKey));
+                window.FromPref();
+                window.AddElements();
+                window.ifInited = true;
+                window.ifFirst = false;
+            }
+        }
 
-            if (!EditorPrefs.HasKey(prefKey)) window.setting = new();
-            else window.setting = JsonUtility.FromJson<Setting>(EditorPrefs.GetString(prefKey));
-            window.FromPref();
-            window.AddElements();
+        private void OnEnable()
+        {
+            if (!ifInited && !ifFirst)
+            {
+                if (!EditorPrefs.HasKey(prefKey)) setting = new();
+                else setting = JsonUtility.FromJson<Setting>(EditorPrefs.GetString(prefKey));
+                FromPref();
+                AddElements();
+                ifInited = true;
+                ifFirst = false;
+            }
         }
 
         private void OnDestroy()
@@ -44,6 +64,8 @@ namespace MikanLab
 
         private void OnDisable()
         {
+            ifInited = false;
+            SavePref();
             SaveGraph();
         }
         #endregion

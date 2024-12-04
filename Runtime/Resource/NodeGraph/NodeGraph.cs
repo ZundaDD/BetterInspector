@@ -29,9 +29,10 @@ namespace MikanLab
                 string tarName = (attr as CountLimitAttribute).NodeType.AssemblyQualifiedName;
                 Type tarType = (attr as CountLimitAttribute).NodeType;
 
+
                 foreach (var node in NodeList)
                 {
-                    if (tarType.AssemblyQualifiedName == tarName) i++;
+                    if (node.GetType().AssemblyQualifiedName == tarName) i++;
                 }
                 if (i < tarMin)
                 {

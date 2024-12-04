@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
@@ -37,6 +38,9 @@ namespace MikanLab
             {
                 SearchWindow.Open(new SearchWindowContext(context.screenMousePosition), searchWindowProvider);
             };
+
+            deleteSelection += DeleteNode;
+            
         }
 
         public override List<Port> GetCompatiblePorts(Port startAnchor, NodeAdapter nodeAdapter)
@@ -180,6 +184,36 @@ namespace MikanLab
             //记录类型数量
             if (!nodeCache.ContainsKey(nodeType)) nodeCache.Add(nodeType, 0);
             nodeCache[nodeType]++;
+        }
+         
+        public virtual void DeleteNode(string op,AskUser askUser)
+        {
+            var selections = selection.ToList();
+
+            s_target.Update();
+            s_target.ApplyModifiedProperties();
+
+            foreach (var element in selection)
+            {
+                if (element is VisualNode node)
+                {
+                    nodeCache[node.Data.GetType()]--;
+                    if(nodeCache[node.Data.GetType()] == 0) nodeCache.Remove(node.Data.GetType());
+                    target.NodeList.RemoveAll(x => x == node.Data);
+                }
+            }
+
+            //重新序列化
+            s_target = new(target);
+            s_nodes = s_target.FindProperty("NodeList");
+            for (int i = 0; i < vnodeList.Count; ++i)
+            {
+                vnodeList[i].serializedProperty = s_nodes.GetArrayElementAtIndex(i);
+                vnodeList[i].extensionContainer.Clear();
+                vnodeList[i].DrawNode();
+            }
+
+            DeleteSelection();
         }
 
         public virtual void Execute() { }

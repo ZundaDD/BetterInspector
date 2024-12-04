@@ -1,11 +1,11 @@
-﻿
-
+﻿using System;
 
 namespace MikanLab
 {
     /// <summary>
     /// 输入节点，用于接收参数来进行遍历
     /// </summary>
+    [Serializable]
     [UsedFor(typeof(RandomPool))]
     class Input : BaseNode
     {
@@ -19,6 +19,7 @@ namespace MikanLab
     /// <summary>
     /// 输出节点，用于接收结果并输出给GetResult
     /// </summary>
+    [Serializable]
     [UsedFor(typeof(RandomPool))]
     class Output : BaseNode
     {
@@ -41,6 +42,7 @@ namespace MikanLab
     /// <summary>
     /// 权重节点，用于控制分清支路
     /// </summary>
+    [Serializable]
     [UsedFor(typeof(RandomPool))]
     class Weight : InOutNode
     {
