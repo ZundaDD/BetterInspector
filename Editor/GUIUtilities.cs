@@ -1,37 +1,35 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
+using UnityEditor.UIElements;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public static class GUIUtilities
 {
-    private static GUIStyle boldFoldout;
-    public static GUIStyle BoldFoldout
+    private static StyleSheet propertyFieldLessenLabel;
+    public static StyleSheet PropertyFieldLessenLabel
     {
         get
         {
-            if (boldFoldout == null)
+            if(propertyFieldLessenLabel == null)
             {
-                boldFoldout = new GUIStyle(EditorStyles.foldout);
-                boldFoldout.fontStyle = FontStyle.Bold;
+                propertyFieldLessenLabel = AssetDatabase.LoadAssetAtPath<StyleSheet>(AssetDatabase.GUIDToAssetPath("32a4f7f1be4a4854691c67709e0399e0"));
             }
-            return boldFoldout;
+            return propertyFieldLessenLabel;
         }
     }
 
-    public static float currentY;
-    public static float spacing = EditorGUIUtility.standardVerticalSpacing;
-
-    public static void BeginVertical(Rect position)
+    private static StyleSheet graphViewColored;
+    public static StyleSheet GraphViewColored
     {
-        currentY = position.y;
+        get
+        {
+            if (graphViewColored == null)
+            {
+                graphViewColored = AssetDatabase.LoadAssetAtPath<StyleSheet>(AssetDatabase.GUIDToAssetPath("47eca1ae3cb39d64682a49e78c79e4c3"));
+            }
+            return graphViewColored;
+        }
     }
-
-    public static Rect NextControlRect(Rect position, float height)
-    {
-        Rect rect = new Rect(position.x, currentY, position.width, height);
-        currentY += height + spacing;
-        return rect;
-    }
-
 }

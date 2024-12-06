@@ -24,9 +24,11 @@ namespace MikanLab
             this.target = target;
             this.s_target = new(target);
             this.s_nodes = s_target.FindProperty("NodeList");
-            
+
 
             //交互操作
+            AddToClassList("Mikan-graph-view");
+            styleSheets.Add(GUIUtilities.GraphViewColored);
             this.AddManipulator(new SelectionDragger());
             SetupZoom(0.5f, ContentZoomer.DefaultMaxScale);
             Insert(0, new GridBackground());
@@ -119,18 +121,18 @@ namespace MikanLab
         /// </summary>
         public void SaveChangeToAsset()
         {
-            s_target.Update();
-            s_target.ApplyModifiedProperties();
+            SaveSerialized();
 
             Dictionary<Node, int> indexs = new();
             target.NodeList.Clear();
 
+            int i = 0;
             foreach (var node in nodes)
             {
                 var preData = (node as VisualNode).Data;
                 preData.NodeName = node.title;
                 preData.Position = node.GetPosition().position;
-
+                preData.index = i;i++;
                 foreach(var outport in preData.OutputPorts) outport.Value.Edges.Clear();
                 foreach(var inport in preData.InputPorts) inport.Value.Edges.Clear();
 
@@ -159,9 +161,7 @@ namespace MikanLab
 
         public virtual void AddNewNode(Type nodeType)
         {
-            //保存之前的更改
-            s_target.Update();
-            s_target.ApplyModifiedProperties();
+            SaveSerialized();
             
             //添加新的显示节点到资源文件中
             var newnode = BaseNode.CreateNode(nodeType);
@@ -190,8 +190,7 @@ namespace MikanLab
         {
             var selections = selection.ToList();
 
-            s_target.Update();
-            s_target.ApplyModifiedProperties();
+            SaveSerialized();
 
             foreach (var element in selection)
             {
@@ -214,6 +213,12 @@ namespace MikanLab
             }
 
             DeleteSelection();
+        }
+
+        public virtual void SaveSerialized()
+        {
+            s_target.Update();
+            s_target.ApplyModifiedProperties();
         }
 
         public virtual void Execute() { }

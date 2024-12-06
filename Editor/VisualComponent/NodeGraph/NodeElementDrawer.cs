@@ -8,16 +8,20 @@ using UnityEngine.UIElements;
 namespace MikanLab
 {
     [GraphDrawer(typeof(BaseNode))]
-    public class NodeDrawer
+    public class NodeElementDrawer
     {
-        protected SerializedProperty property;
-        protected VisualElement container;
-        public NodeDrawer(SerializedProperty nodeProperty, VisualNode visualnode)
+        public SerializedProperty property;
+        protected VisualNode visualNode;
+        
+        public void Bind(SerializedProperty nodeProperty, VisualNode visualnode)
         {
-            container = visualnode.extensionContainer;
+            this.visualNode = visualnode;
             property = nodeProperty;
         }
-        public virtual void OnDrawer() { }
+        public virtual void OnDrawer()
+        {
+            visualNode.extensionContainer.style.backgroundColor = new Color(0x7a / 256f,0x9f / 256f,0xaa / 256f);
+        }
     }
 
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = false,Inherited = false)]

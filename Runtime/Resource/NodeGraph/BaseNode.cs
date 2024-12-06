@@ -34,7 +34,7 @@ namespace MikanLab
         }
 
         [NonSerialized] public NodeGraph Owner;
-
+        [SerializeField] public int index = 0;
         [SerializeField] public PortDictionary InputPorts = new();
         [SerializeField] public PortDictionary OutputPorts = new();
         [SerializeField] public string NodeName = "";
@@ -97,7 +97,7 @@ namespace MikanLab
         /// <summary>
         /// 执行节点的功能
         /// </summary>
-        public virtual void Execute() { }
+        public virtual List<int> Execute(bool[] visit,List<int> result) { return result; }
 
         /// <summary>
         /// 获取输出端口的第一个连接的节点

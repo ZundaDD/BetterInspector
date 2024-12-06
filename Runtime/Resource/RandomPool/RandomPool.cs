@@ -58,10 +58,20 @@ namespace MikanLab
                 }
             }
 
-            List<int> result = new();
+            BaseNode root = null;
+            foreach(var node in NodeList)
+            {
+                if(node.GetType() == typeof(Input))
+                {
+                    root = node;
+                    break;
+                }
+            }
 
+            bool[] visit = new bool[NodeList.Count];
+            visit[root.index] = true;
+            return root.Execute(visit,new());
 
-            return result;
         }
         
 

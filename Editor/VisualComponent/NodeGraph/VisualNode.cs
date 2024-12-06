@@ -2,6 +2,7 @@ using System;
 using UnityEditor;
 using UnityEngine;
 using UnityEditor.Experimental.GraphView;
+using UnityEngine.UIElements;
 
 namespace MikanLab
 {
@@ -42,8 +43,11 @@ namespace MikanLab
         public void DrawNode()
         {
             var drawerType = EditorUtilities.GetNodeDrawers(Data.GetType());
-            var newDrawer = Activator.CreateInstance(drawerType, serializedProperty, this) as NodeDrawer;
+            var newDrawer = Activator.CreateInstance(drawerType) as NodeElementDrawer;
+            newDrawer.Bind(serializedProperty, this);
             newDrawer.OnDrawer();
+
+            RefreshExpandedState();
         }
     }
 }

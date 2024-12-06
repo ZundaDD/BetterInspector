@@ -10,14 +10,13 @@ namespace MikanLab
 {
     public class RandomPoolGraph : NodeGraphElement
     {
-        public RootNode root;
         
         public RandomPoolGraph(RandomPool target) : base(target) { }
 
         
         public override void Execute()
         {
-            
+            target.Execute();            
         }
     }
 }
