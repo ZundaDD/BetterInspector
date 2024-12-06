@@ -58,19 +58,19 @@ namespace MikanLab
                 }
             }
 
-            BaseNode root = null;
+            RandomPoolBaseNode root = null;
             foreach(var node in NodeList)
             {
                 if(node.GetType() == typeof(Input))
                 {
-                    root = node;
+                    root = node as RandomPoolBaseNode;
                     break;
                 }
             }
 
             bool[] visit = new bool[NodeList.Count];
             visit[root.index] = true;
-            return root.Execute(visit,new());
+            return root.Execute(visit);
 
         }
         

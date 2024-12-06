@@ -11,6 +11,6 @@
     flex-shrink: 0; /* 防止标签收缩 */
 }
 
-.unity-property-field > .unity-property-field__input {
-    flex-grow: 1; /* 让输入框占据剩余空间 */
+.unity-property-field .unity-text-element--inner-input-field-component {
+    flex-grow: 0; /* 让输入框占据剩余空间 */
 }

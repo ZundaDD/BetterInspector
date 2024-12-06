@@ -14,6 +14,7 @@ namespace MikanLab
         private bool ifFirst = true;
         private RandomPool target;
         private Setting setting;
+        private VisualElement toolbar;
 
         #region 偏好设置
         [Serializable]
@@ -72,7 +73,7 @@ namespace MikanLab
 
         #region 元素组件
         private RandomPoolGraph graph;
-        private VisualElement Graph
+        private NodeGraphElement Graph
         {
             get
             {
@@ -104,12 +105,17 @@ namespace MikanLab
         #region 绘制控制
         private void AddElements()
         {
-            var propertyWindow = PropertyWindow;
-            rootVisualElement.Add(new Button(propertyWindow.Reverse) { text = "属性" });
-            //rootVisualElement.Add(new Button(graphView.Execute) { text = "Execute" });
+            toolbar = new();
+            rootVisualElement.Add(toolbar);
 
+            var propertyWindow = PropertyWindow;
+            toolbar.style.flexDirection = FlexDirection.Row; 
+            toolbar.Add(new Button(propertyWindow.Reverse) { text = "属性" });
+            toolbar.Add(new Button(Graph.Execute) { text = "测试" });
+            
             rootVisualElement.Add(PropertyWindow);
             rootVisualElement.Add(Graph);
+            
 
         }
 

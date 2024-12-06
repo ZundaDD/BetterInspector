@@ -1,6 +1,4 @@
 ﻿using UnityEditor.UIElements;
-using UnityEngine;
-using UnityEngine.UIElements;
 
 namespace MikanLab
 {
@@ -15,8 +13,14 @@ namespace MikanLab
             PropertyField text = new();
             text.BindProperty(itemproperty);
             text.styleSheets.Add(GUIUtilities.PropertyFieldLessenLabel);
-            
+
+            var countproperty = property.FindPropertyRelative("count");
+            PropertyField count = new();
+            count.BindProperty(countproperty);
+            count.styleSheets.Add(GUIUtilities.PropertyFieldLessenLabel);
+
             visualNode.extensionContainer.Add(text);
+            visualNode.extensionContainer.Add(count);
         }
     }
 }

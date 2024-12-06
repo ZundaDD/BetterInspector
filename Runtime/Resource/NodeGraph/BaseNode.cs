@@ -94,11 +94,7 @@ namespace MikanLab
         #endregion
 
         #region 遍历相关
-        /// <summary>
-        /// 执行节点的功能
-        /// </summary>
-        public virtual List<int> Execute(bool[] visit,List<int> result) { return result; }
-
+        
         /// <summary>
         /// 获取输出端口的第一个连接的节点
         /// </summary>

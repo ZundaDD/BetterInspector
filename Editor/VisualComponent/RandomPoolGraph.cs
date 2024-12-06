@@ -16,7 +16,10 @@ namespace MikanLab
         
         public override void Execute()
         {
-            target.Execute();            
+            foreach(int i in (target as RandomPool).GetResult(new Parameter[0]))
+            {
+                Debug.Log(i);
+            }
         }
     }
 }
