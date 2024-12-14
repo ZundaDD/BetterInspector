@@ -22,14 +22,15 @@ namespace MikanLab
         {
             target.MeetNodeLimit();
             this.target = target;
-            this.s_target = new(target);
-            this.s_nodes = s_target.FindProperty("NodeList");
+            
 
 
             //交互操作
             AddToClassList("Mikan-graph-view");
             styleSheets.Add(GUIUtilities.GraphViewColored);
             this.AddManipulator(new SelectionDragger());
+            this.AddManipulator(new ContentDragger());
+            this.AddManipulator(new RectangleSelector());
             SetupZoom(0.5f, ContentZoomer.DefaultMaxScale);
             Insert(0, new GridBackground());
 
@@ -67,11 +68,14 @@ namespace MikanLab
         /// </summary>
         public void LoadFromAsset()
         {
+            this.s_target = new(target);
+            this.s_nodes = s_target.FindProperty("NodeList");
 
             for (int i = 0; i < target.NodeList.Count; ++i)
             {
                 var node = target.NodeList[i];
-                var visualNode = new VisualNode(node,s_nodes.GetArrayElementAtIndex(i));
+                var visualNode = new VisualNode(node);
+                visualNode.Bind(s_nodes.GetArrayElementAtIndex(i));
 
                 AddElement(visualNode);
                 if (!nodeCache.ContainsKey(visualNode.Type)) nodeCache.Add(visualNode.Type, 0);
@@ -132,18 +136,22 @@ namespace MikanLab
                 var preData = (node as VisualNode).Data;
                 preData.NodeName = node.title;
                 preData.Position = node.GetPosition().position;
-                preData.index = i;i++;
+                preData.index = i;
+                indexs[node] = i;
+                i++;
                 foreach(var outport in preData.OutputPorts) outport.Value.Edges.Clear();
                 foreach(var inport in preData.InputPorts) inport.Value.Edges.Clear();
 
                 target.NodeList.Add(preData);
-                indexs[node] = target.NodeList.Count - 1;
+                
             }
 
             foreach (var edge in edges)
             {
                 var outdata = new BaseNode.EdgeData();
                 var indata = new BaseNode.EdgeData();
+
+                if (!indexs.ContainsKey(edge.input.node) || !indexs.ContainsKey(edge.output.node)) continue;
 
                 outdata.TargetPortName = edge.input.portName;
                 outdata.TargetIndex = indexs[edge.input.node];
@@ -163,27 +171,21 @@ namespace MikanLab
         {
             SaveSerialized();
             
-            //添加新的显示节点到资源文件中
+            //添加新的节点
             var newnode = BaseNode.CreateNode(nodeType);
-            target.NodeList.Add(newnode);
+            var node = new VisualNode(newnode);
 
-            //重新序列化
-            s_target = new(target);
-            s_nodes = s_target.FindProperty("NodeList");
-            for (int i = 0; i < vnodeList.Count; ++i)
-            {
-                vnodeList[i].serializedProperty = s_nodes.GetArrayElementAtIndex(i);
-                vnodeList[i].extensionContainer.Clear();
-                vnodeList[i].DrawNode();
-            }
-            
-            //添加新的显示节点
-            var node = new VisualNode(newnode,s_nodes.GetArrayElementAtIndex(vnodeList.Count));
             AddElement(node);
+            vnodeList.Add(node);
+         
+            SaveChangeToAsset();
+            
+            DeleteElements(edges);
+            DeleteElements(nodes);
+            nodeCache.Clear();
+            vnodeList.Clear();
 
-            //记录类型数量
-            if (!nodeCache.ContainsKey(nodeType)) nodeCache.Add(nodeType, 0);
-            nodeCache[nodeType]++;
+            LoadFromAsset();
         }
          
         public virtual void DeleteNode(string op,AskUser askUser)
@@ -191,28 +193,17 @@ namespace MikanLab
             var selections = selection.ToList();
 
             SaveSerialized();
-
-            foreach (var element in selection)
-            {
-                if (element is VisualNode node)
-                {
-                    nodeCache[node.Data.GetType()]--;
-                    if(nodeCache[node.Data.GetType()] == 0) nodeCache.Remove(node.Data.GetType());
-                    target.NodeList.RemoveAll(x => x == node.Data);
-                }
-            }
-
-            //重新序列化
-            s_target = new(target);
-            s_nodes = s_target.FindProperty("NodeList");
-            for (int i = 0; i < vnodeList.Count; ++i)
-            {
-                vnodeList[i].serializedProperty = s_nodes.GetArrayElementAtIndex(i);
-                vnodeList[i].extensionContainer.Clear();
-                vnodeList[i].DrawNode();
-            }
-
+            
             DeleteSelection();
+
+            SaveChangeToAsset();
+            
+            DeleteElements(edges);
+            DeleteElements(nodes);
+            nodeCache.Clear();
+            vnodeList.Clear();
+
+            LoadFromAsset();
         }
 
         public virtual void SaveSerialized()

@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor.Experimental.GraphView;
 using UnityEditor;
+using UnityEngine.UIElements;
 
 namespace MikanLab
 {
     public class NodeSeracher : ScriptableObject, ISearchWindowProvider
     {
         private NodeGraphElement graphView;
+
 
         public void Initialize(NodeGraphElement graphView)
         {
@@ -17,6 +19,7 @@ namespace MikanLab
 
         List<SearchTreeEntry> ISearchWindowProvider.CreateSearchTree(SearchWindowContext context)
         {
+
             var entries = new List<SearchTreeEntry>();
             var limitDict = GraphUtilities.GetGraphLimit(graphView.target.GetType());
 

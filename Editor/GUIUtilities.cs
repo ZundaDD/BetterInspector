@@ -32,4 +32,17 @@ public static class GUIUtilities
             return graphViewColored;
         }
     }
+
+    private static StyleSheet propertyBox;
+    public static StyleSheet PropertyBox
+    {
+        get
+        {
+            if (propertyBox == null)
+            {
+                propertyBox = AssetDatabase.LoadAssetAtPath<StyleSheet>(AssetDatabase.GUIDToAssetPath("dcb2cb882dda7f94aa20906a0328910a"));
+            }
+            return propertyBox;
+        }
+    }
 }

@@ -12,14 +12,19 @@ namespace MikanLab
         public BaseNode Data;
         public Type Type => Data.GetType();
 
-        public VisualNode(BaseNode data,SerializedProperty serializedproperty)
+        public VisualNode(BaseNode data)
         {
-            this.serializedProperty = serializedproperty;
             Data = data;
             title = Data.NodeName;
             if (!Data.Deleteable) capabilities -= Capabilities.Deletable;
             foreach (var inputPort in data.InputPorts) AddInputPort(inputPort.Key,inputPort.Value);
             foreach (var outputPort in data.OutputPorts) AddOutputPort(outputPort.Key,outputPort.Value);
+            
+        }
+
+        public void Bind(SerializedProperty serializedProperty)
+        {
+            this.serializedProperty = serializedProperty;
             DrawNode();
         }
 

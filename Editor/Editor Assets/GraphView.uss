@@ -1,5 +1,6 @@
 .Mikan-graph-view GridBackground {
     --grid-background-color: #6b817b;
     --spacing: 300;
-    --line-color: rgba(53, 53, 53, 0);
+    --line-color: #76b3a3;
+    --thick-line-color: #a8ffe8; 
 }

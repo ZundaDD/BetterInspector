@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEditor;
 using UnityEngine.UIElements;
 using System;
-using UnityEditor.PackageManager.UI;
+using UnityEditor.UIElements;
 
 namespace MikanLab
 {
@@ -14,7 +14,7 @@ namespace MikanLab
         private bool ifFirst = true;
         private RandomPool target;
         private Setting setting;
-        private VisualElement toolbar;
+        private Toolbar toolbar;
 
         #region 偏好设置
         [Serializable]
@@ -94,7 +94,7 @@ namespace MikanLab
             {
                 if (propertyWindow == null)
                 {
-                    propertyWindow = new PropertyWindow();
+                    propertyWindow = new PropertyWindow(isOpenPropertyWindow);
                 }
                 return propertyWindow;
             }
@@ -106,14 +106,20 @@ namespace MikanLab
         private void AddElements()
         {
             toolbar = new();
+            toolbar.style.flexDirection = FlexDirection.Row;
             rootVisualElement.Add(toolbar);
 
             var propertyWindow = PropertyWindow;
-            toolbar.style.flexDirection = FlexDirection.Row; 
-            toolbar.Add(new Button(propertyWindow.Reverse) { text = "属性" });
-            toolbar.Add(new Button(Graph.Execute) { text = "测试" });
             
-            rootVisualElement.Add(PropertyWindow);
+
+            //工具栏
+            var pro = new ToolbarToggle() { text = "属性" };
+            pro.SetValueWithoutNotify(isOpenPropertyWindow);
+            pro.RegisterValueChangedCallback(ctx => PropertyWindow.Reverse());
+            toolbar.Add(pro);
+            toolbar.Add(new ToolbarButton(Graph.Execute) { text = "测试" });
+
+            Graph.Add(propertyWindow);
             rootVisualElement.Add(Graph);
             
 
@@ -122,6 +128,7 @@ namespace MikanLab
         private void FromPref()
         {
             position = new(setting.position_x, setting.position_y, setting.width, setting.height);
+            isOpenPropertyWindow = setting.propertyWindowOn;
         }
         #endregion
 
@@ -143,7 +150,7 @@ namespace MikanLab
             setting.height = position.height;
             setting.position_x = position.x;
             setting.position_y = position.y;
-            setting.propertyWindowOn = isOpenPropertyWindow;
+            setting.propertyWindowOn = PropertyWindow.isOpen;
             EditorPrefs.SetString(prefKey, JsonUtility.ToJson(setting));
         }
         #endregion

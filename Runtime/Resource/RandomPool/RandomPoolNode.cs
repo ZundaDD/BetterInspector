@@ -30,7 +30,6 @@ namespace MikanLab
             foreach(var node in OutputPorts["Link"].Edges)
             {
                 if (visit[node.TargetIndex]) continue;
-
                 visit[node.TargetIndex] = true;
                 if (Owner.NodeList[node.TargetIndex].GetType() == typeof(Weight))
                 {
