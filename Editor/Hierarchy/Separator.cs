@@ -58,7 +58,7 @@ namespace MikanLab
 
         }
 
-        [MenuItem("GameObject/MikanLab/Separator")]
+        [MenuItem("GameObject/MikanLab/分割线")]
         static void CreateSeparator()
         {
             GameObject go = new GameObject();

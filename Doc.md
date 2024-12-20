@@ -3,6 +3,7 @@
 [2.多重资源管理器](#MultiAttributeResource)</br>
 [3.节点图基础](#BaseNodeGraph)</br>
 [4.静态对象调试](#StaticDebug)</br>
+[5.层级窗口扩展](#Hierarchy)</br>
 
 ---
 ## 1.时间控制<a name="TimeVariable"></a>
@@ -118,3 +119,9 @@ RandomPool是一个继承自NodeGraph的资源文件，它利用节点图的形�
 对于静态字段和静态属性，打上[EditableStatic]将显示可编辑的数值，打上[ReadonlyStatic]将显示仅可读的数值。
 对于静态方法，只有没有参数的静态方法可以打上[VoidStaticMethod]，此时可以在监听器中通过按钮进行显式调用。
 </br></br>
+
+## 5.层级窗口拓展<a name ="Hierarchy"></a>
+
+### 分割线
+右键打开菜单，并选中MikanLab/分割线以在层级窗口中添加一个提供视觉上划分区域的分割线。
+实际上带有SeparatorComponent组件的GameObject在层级窗口将被此种方式覆盖绘制，可以通过修改其属性控制颜色和文字显示。
