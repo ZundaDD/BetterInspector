@@ -26,7 +26,7 @@ namespace MikanLab
         /// <summary>
         /// 删除图标
         /// </summary>
-        Texture deleteIcon;
+        Texture2D deleteIcon;
 
         /// <summary>
         /// 区域限制
@@ -50,7 +50,7 @@ namespace MikanLab
             position = new Rect(100, 100, 300, 150);
 
             //加载Icon
-            deleteIcon = AssetDatabase.LoadAssetAtPath<Texture>(AssetDatabase.GUIDToAssetPath("5f3bcd12f441e1f4a84b5a685237064a"));
+            deleteIcon = GUIUtilities.DeleteIcon;
             
             //调整边距
             FieldStyle.margin.top = -4; 

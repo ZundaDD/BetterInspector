@@ -5,44 +5,81 @@ using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public static class GUIUtilities
+namespace MikanLab
 {
-    private static StyleSheet propertyFieldLessenLabel;
-    public static StyleSheet PropertyFieldLessenLabel
+    /// <summary>
+    /// 预设好的样式和图片
+    /// </summary>
+    public static class GUIUtilities
     {
-        get
+        private static T Load<T>(string GUID) where T : Object
         {
-            if(propertyFieldLessenLabel == null)
-            {
-                propertyFieldLessenLabel = AssetDatabase.LoadAssetAtPath<StyleSheet>(AssetDatabase.GUIDToAssetPath("32a4f7f1be4a4854691c67709e0399e0"));
-            }
-            return propertyFieldLessenLabel;
+            return AssetDatabase.LoadAssetAtPath<T>(AssetDatabase.GUIDToAssetPath(GUID));
         }
-    }
 
-    private static StyleSheet graphViewColored;
-    public static StyleSheet GraphViewColored
-    {
-        get
+        private static Texture2D whiteBackground;
+        public static Texture2D WhiteBackground
         {
-            if (graphViewColored == null)
+            get
             {
-                graphViewColored = AssetDatabase.LoadAssetAtPath<StyleSheet>(AssetDatabase.GUIDToAssetPath("47eca1ae3cb39d64682a49e78c79e4c3"));
+                if(whiteBackground == null)
+                {
+                    whiteBackground = Load<Texture2D>("fbc5911f88914c54a99fbd71ee019847");
+                }
+                return whiteBackground;
             }
-            return graphViewColored;
         }
-    }
 
-    private static StyleSheet propertyBox;
-    public static StyleSheet PropertyBox
-    {
-        get
+        private static Texture2D deleteIcon;
+        public static Texture2D DeleteIcon
         {
-            if (propertyBox == null)
+            get
             {
-                propertyBox = AssetDatabase.LoadAssetAtPath<StyleSheet>(AssetDatabase.GUIDToAssetPath("dcb2cb882dda7f94aa20906a0328910a"));
+                if(deleteIcon == null)
+                {
+                    deleteIcon = Load<Texture2D>("5f3bcd12f441e1f4a84b5a685237064a");
+                }
+                return deleteIcon;
             }
-            return propertyBox;
+        }
+
+        private static StyleSheet propertyFieldLessenLabel;
+        public static StyleSheet PropertyFieldLessenLabel
+        {
+            get
+            {
+                if (propertyFieldLessenLabel == null)
+                {
+                    propertyFieldLessenLabel = Load<StyleSheet>("32a4f7f1be4a4854691c67709e0399e0");
+                }
+                return propertyFieldLessenLabel;
+            }
+        }
+
+        private static StyleSheet graphViewColored;
+        public static StyleSheet GraphViewColored
+        {
+            get
+            {
+                if (graphViewColored == null)
+                {
+                    graphViewColored = Load<StyleSheet>("47eca1ae3cb39d64682a49e78c79e4c3");
+                }
+                return graphViewColored;
+            }
+        }
+
+        private static StyleSheet propertyBox;
+        public static StyleSheet PropertyBox
+        {
+            get
+            {
+                if (propertyBox == null)
+                {
+                    propertyBox = Load<StyleSheet>("dcb2cb882dda7f94aa20906a0328910a");
+                }
+                return propertyBox;
+            }
         }
     }
 }
