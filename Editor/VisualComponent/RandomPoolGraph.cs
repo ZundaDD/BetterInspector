@@ -1,19 +1,17 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
-using UnityEngine.UIElements;
-using static UnityEngine.GraphicsBuffer;
 
 namespace MikanLab
 {
-    public class RandomPoolGraph : NodeGraphElement
+    using NodeGraph;
+    [CustomGraphView(typeof(RandomPool))]
+    public class RandomPoolGraph : NodeGraphView
     {
-        
-        public RandomPoolGraph(RandomPool target) : base(target) { }
+        public RandomPoolGraph() : base()
+        {
+            AddToClassList("Mikan-graph-view");
+            styleSheets.Add(GUIUtilities.GraphViewColored);
+        }
 
-        
         public override void Execute()
         {
             foreach(int i in (target as RandomPool).GetResult(new Parameter[0]))

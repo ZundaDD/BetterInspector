@@ -4,25 +4,20 @@ using UnityEngine;
 
 namespace MikanLab
 {
+    using NodeGraph;
+
     [CountLimit(NodeType = typeof(Input), Min = 1, Max = 1)]
     [CountLimit(NodeType = typeof(Output),Min = 1, Max = 1)]
     [CreateAssetMenu(fileName = "RandomPool", menuName = "MikanLab/随机池")]
     /// <summary>
     /// 基本随机池
     /// </summary>
-    public class RandomPool : NodeGraph, ISerializationCallbackReceiver
+    public class RandomPool : NodeGraph.NodeGraph
     {
-        #region 参数
         /// <summary>
-        /// 运行时参数表
+        /// 参数字典
         /// </summary>
-        [NonSerialized] public Dictionary<string, Parameter> Parameters = new();
-
-        /// <summary>
-        /// 序列化时参数表
-        /// </summary>
-        [SerializeField] public List<Parameter> ParametersList = new();
-        #endregion
+        SerializedDictionary<string, Parameter> Parameters = new();
 
         /// <summary>
         /// 是否为计数不放回模式
@@ -69,38 +64,11 @@ namespace MikanLab
             }
 
             bool[] visit = new bool[NodeList.Count];
-            visit[root.index] = true;
+            visit[root.Index] = true;
             return root.Execute(visit);
 
         }
         
 
-        #region 序列化
-        /// <summary>
-        /// 序列化后
-        /// </summary>
-        public void OnAfterDeserialize()
-        {
-            Parameters.Clear();
-            foreach (var para in ParametersList)
-            {
-                Parameters[para.Name] = para;
-            }
-            ParametersList.Clear();
-        }
-
-        /// <summary>
-        /// 序列化前
-        /// </summary>
-        public void OnBeforeSerialize()
-        {
-            ParametersList.Clear();
-            foreach (var para in Parameters)
-            {
-                ParametersList.Add(para.Value);
-            }
-            Parameters.Clear();
-        }
-        #endregion
     }
 }

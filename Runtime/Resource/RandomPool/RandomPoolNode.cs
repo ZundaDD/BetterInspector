@@ -4,6 +4,8 @@ using UnityEngine;
 
 namespace MikanLab
 {
+    using NodeGraph;
+
     public abstract class RandomPoolBaseNode : BaseNode
     {
         public abstract List<int> Execute(bool[] visit);
@@ -18,7 +20,7 @@ namespace MikanLab
     {
         public Input() 
         {
-            NodeName = "输入";
+            OnGraphData.NodeName = "输入";
             AddOutputPort(typeof(int), "Link", true);
         }
 
@@ -58,13 +60,13 @@ namespace MikanLab
     {
         public Output()
         {
-            NodeName = "输出";
+            OnGraphData.NodeName = "输出";
             AddInputPort(typeof(int), "Result", true);
         }
 
         public override List<int> Execute(bool[] visit)
         {
-            visit[index] = false;
+            visit[Index] = false;
             return new();
         }
     }
@@ -121,7 +123,7 @@ namespace MikanLab
         
         public Weight()
         {
-            NodeName = "权重";
+            OnGraphData.NodeName = "权重";
         }
 
     }
@@ -134,7 +136,7 @@ namespace MikanLab
         Predicate predicate;
         public Condition()
         {
-            NodeName = "条件";
+            OnGraphData.NodeName = "条件";
         }
 
         public override List<int> Execute(bool[] visit)
@@ -153,7 +155,7 @@ namespace MikanLab
 
         public Item()
         {
-            NodeName = "待选项";
+            OnGraphData.NodeName = "待选项";
         }
 
         public override List<int> Execute(bool[] visit)
@@ -176,7 +178,7 @@ namespace MikanLab
 
         public Count()
         {
-            NodeName = "数量";
+            OnGraphData.NodeName = "数量";
         }
     }
 }

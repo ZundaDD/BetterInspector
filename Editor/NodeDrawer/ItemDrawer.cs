@@ -1,9 +1,12 @@
 ﻿using UnityEditor.UIElements;
 
+
 namespace MikanLab
 {
-    [GraphDrawer(typeof(Item))]
-    class ItemDrawer : NodeElementDrawer
+    using NodeGraph;
+
+    [CustomNodeDrawer(typeof(Item))]
+    class ItemDrawer : NodeDrawer
     {
         public override void OnDrawer()
         {

@@ -2,8 +2,10 @@
 
 namespace MikanLab
 {
-    [GraphDrawer(typeof(Weight))]
-    class WeightDrawer : NodeElementDrawer
+    using NodeGraph;
+
+    [CustomNodeDrawer(typeof(Weight))]
+    class WeightDrawer : NodeDrawer
     {
         public override void OnDrawer()
         {
