@@ -1,5 +1,3 @@
-using UnityEngine;
-using UnityEditor;
 using UnityEngine.UIElements;
 using System;
 using UnityEditor.UIElements;
