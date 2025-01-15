@@ -9,7 +9,7 @@ namespace MikanLab
         public RandomPoolGraph() : base()
         {
             AddToClassList("Mikan-graph-view");
-            styleSheets.Add(GUIUtilities.GraphViewColored);
+            styleSheets.Add(EditorResources.GraphViewColored);
         }
 
         public override void Execute()

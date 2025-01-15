@@ -10,7 +10,7 @@ namespace MikanLab
     /// <summary>
     /// 预设好的样式和图片
     /// </summary>
-    public static class GUIUtilities
+    public static class EditorResources
     {
         private static T Load<T>(string GUID) where T : Object
         {

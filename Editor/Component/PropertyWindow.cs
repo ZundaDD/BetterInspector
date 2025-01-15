@@ -33,7 +33,7 @@ namespace MikanLab
             scrollView.Add(new Label("Name:"));
             scrollView.Add(new TextField());
 
-            styleSheets.Add(GUIUtilities.PropertyBox);
+            styleSheets.Add(EditorResources.PropertyBox);
             AddToClassList("Mikan-Property-Box");
 
             isOpen = initState;

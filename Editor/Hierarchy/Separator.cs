@@ -40,7 +40,7 @@ namespace MikanLab
 
             //准备样式
             GUIStyle boxstyle = new(GUIStyle.none);
-            boxstyle.normal.background = GUIUtilities.WhiteBackground;
+            boxstyle.normal.background = EditorResources.WhiteBackground;
             boxstyle.normal.textColor = Color.white;
             boxstyle.fontStyle = FontStyle.Bold;
             boxstyle.alignment = TextAnchor.MiddleCenter;

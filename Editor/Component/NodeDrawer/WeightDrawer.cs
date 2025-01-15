@@ -14,7 +14,7 @@ namespace MikanLab
             var weightproperty = property.FindPropertyRelative("weight");
             PropertyField weight = new();
             weight.BindProperty(weightproperty);
-            weight.styleSheets.Add(GUIUtilities.PropertyFieldLessenLabel);
+            weight.styleSheets.Add(EditorResources.PropertyFieldLessenLabel);
 
             visualNode.extensionContainer.Add(weight);
         }

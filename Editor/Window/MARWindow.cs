@@ -50,7 +50,7 @@ namespace MikanLab
             position = new Rect(100, 100, 300, 150);
 
             //加载Icon
-            deleteIcon = GUIUtilities.DeleteIcon;
+            deleteIcon = EditorResources.DeleteIcon;
             
             //调整边距
             FieldStyle.margin.top = -4; 

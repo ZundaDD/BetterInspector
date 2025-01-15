@@ -15,12 +15,12 @@ namespace MikanLab
             var itemproperty = property.FindPropertyRelative("item");
             PropertyField text = new();
             text.BindProperty(itemproperty);
-            text.styleSheets.Add(GUIUtilities.PropertyFieldLessenLabel);
+            text.styleSheets.Add(EditorResources.PropertyFieldLessenLabel);
 
             var countproperty = property.FindPropertyRelative("count");
             PropertyField count = new();
             count.BindProperty(countproperty);
-            count.styleSheets.Add(GUIUtilities.PropertyFieldLessenLabel);
+            count.styleSheets.Add(EditorResources.PropertyFieldLessenLabel);
 
             visualNode.extensionContainer.Add(text);
             visualNode.extensionContainer.Add(count);
