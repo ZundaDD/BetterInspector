@@ -1,12 +1,12 @@
 # 目录
-[1.时间控制](#TimeVariable)</br>
+[1.时间控制](#TimeControl)</br>
 [2.多重资源管理器](#MultiAttributeResource)</br>
-[3.节点图基础](#BaseNodeGraph)</br>
-[4.静态对象调试](#StaticDebug)</br>
+[3.节点图拓展](#NodeGraphExtension)</br>
+[4.调试](#Debug)</br>
 [5.层级窗口扩展](#Hierarchy)</br>
 
 ---
-## 1.时间控制<a name="TimeVariable"></a>
+## 1.时间控制<a id="TimeControl"></a>
 
 ### 生命循环器
 生命控制器是时间控制的承载者，通过LifeCycle的单例可以挂载实现了ILifeCycle接口的对象，无论其是否继承自**MonoBehaviour**
@@ -44,8 +44,25 @@ foo.Trigger();
 ### 延时委托(重构中)
 </br></br>
 
+### 任务进度条
+基于UniTask的任务布置器，通过将任务添加到进度条中，使用Start方法启动执行，可以通过公开的数据接口获取实施进度
+以及当前执行的任务描述
+</br></br>
+```
+TaskProgress foo = new("完成任务...");
+foo.AddTask(func1,"进行XXX",1);
+foo.AddTask(func2,"进行XX",2);
+foo.AddTask(func3,"进行X",3);
+foo.Start();
+foo.ProgressFloat => 进度，为介于0-1之间的数
+foo.CurrentTaskDescription => 正在执行的任务描述
+foo.LeftTask => 剩余未完成的任务项，包括正在执行的
+```
+每个任务推进的进度由权重决定，通过AddTask的第三个参数指定
+</br></br>
+
 ---
-## 2.多重资源属性<a name ="MultiAttributeResource"></a>
+## 2.多重资源属性<a id ="MultiAttributeResource"></a>
 
 ### 多重属性资源
 MultiAttributeResource是一个继承自ScriptObject的资源文件，它可以包含若干个String、Int、Bool、Float变量。
@@ -55,28 +72,10 @@ MultiAttributeResource是一个继承自ScriptObject的资源文件，它可以�
 </br></br>
 
 ---
-## 3.节点图基础<a name ="BaseNodeGraph"></a>
+## 3.节点图拓展<a id ="NodeGraphExtension"></a>
 
-### 节点图资源
-NodeGraph是节点图基类，存储了节点的信息，包括每一个节点的位置、类型以及连接状况。
-</br>
-使用Execute方法进行遍历，这需要您自己定义遍历的方式。
-</br></br>
-
-### 可视化编辑
-节点图采用GraphView进行可视化编辑,NodeGraphElement是对GraphView的一层封装，提供了从文件到视图和从视图到文件的转换
-</br>
-允许右键创建新的节点，通过SearchTree进行，具体的搜索方式见下文。
-</br></br>
-
-### 节点属性
-[UniversalUsed]表示该节点及其所有继承类永远会被搜索到。
-</br>
-[UsedFor]表示该节点及其继承类（可选）会被指定的节点图资源类型搜索到。
-
-### 节点图属性
-[CountLimit]表示该节点图中指定类型的节点的数量应该在Min-Max之间，数量 < Min值将会自动添加，>= Max值将无法被搜索到。
-</br></br>
+此部分内容基于[NodeGraphTemplate仓库](https://github.com/ZundaDD/NodeGraphTemplate "github仓库")，作为包的依赖项
+请先行下载</br>
 
 ### 随机表（施工中）
 RandomPool是一个继承自NodeGraph的资源文件，它利用节点图的形式表现一个随机过程的输入、判断、随机生成以及输出</br>
@@ -108,19 +107,18 @@ RandomPool是一个继承自NodeGraph的资源文件，它利用节点图的形�
 </br></br>
 
 ---
-## 4.静态对象调试<a name ="StaticDebug"></a>
+## 4.调试<a id ="Debug"></a>
 
-### 标记类
-打上[TrackStatic]的类将纳入静态变量监视列表，类中的静态对象可以在MikanLab/静态变量监视器中查看。
-注意，类带有[TrackStatic]特性是被监视的先决条件，如何没有此特性，就算给静态成员施以对应特性也不会加入监视列表中。
+### 调试类
+打上[DebugClass]的类将纳入调试器，类中的调试方法可以在MikanLab/调试器中查看。
+注意，类带有[DebugClass]特性是被监视的先决条件，如何没有此特性，就算给静态成员施以对应特性也不会加入监视列表中。
 </br></br>
 
-### 标记成员
-对于静态字段和静态属性，打上[EditableStatic]将显示可编辑的数值，打上[ReadonlyStatic]将显示仅可读的数值。
-对于静态方法，只有没有参数的静态方法可以打上[VoidStaticMethod]，此时可以在监听器中通过按钮进行显式调用。
+### 调试方法
+对于静态无参方法，可以打上[DebugMethod]，此时可以在调试器中通过按钮进行显式调用。
 </br></br>
 
-## 5.层级窗口拓展<a name ="Hierarchy"></a>
+## 5.层级窗口拓展<a id ="Hierarchy"></a>
 
 ### 分割线
 右键打开菜单，并选中MikanLab/分割线以在层级窗口中添加一个提供视觉上划分区域的分割线。
