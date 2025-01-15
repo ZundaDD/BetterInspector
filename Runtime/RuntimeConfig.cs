@@ -5,23 +5,14 @@ using UnityEngine;
 
 namespace MikanLab
 {
-    [TrackStatic]
-    public static class RuntimeConfig
+    [DebugClass]
+    public class RuntimeConfig
     {
-        [EditableStatic]
-        private static int s;
-        [EditableStatic]
-        internal static float sdf;
-        [EditableStatic]
-        public static bool sdfEnabled;
-        [EditableStatic]
-        public static T a;
+        [DebugMethod]
+        protected static void Init()
+        {
+            Debug.Log("Initing!");
+        }
     }
 
-    [Serializable]
-    public class T
-    {
-        [SerializeField]public int a;
-        [SerializeField]public int v;
-    }
 }

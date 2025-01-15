@@ -2,7 +2,8 @@
     "name": "MikanLab.BetterInspector.Runtime",
     "rootNamespace": "",
     "references": [
-        "GUID:721baddc6a6592b4a960b8a7122c05df"
+        "GUID:721baddc6a6592b4a960b8a7122c05df",
+        "GUID:f51ebe6a0ceec4240a699833d6309b23"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

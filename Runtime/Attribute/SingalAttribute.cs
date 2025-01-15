@@ -3,28 +3,17 @@ using System;
 
 namespace MikanLab
 {
-    /// <summary>
-    /// ¿É±à¼­µÄ¾²Ì¬×Ö¶Î/ÊôĞÔ
-    /// </summary>
-    [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
-    public class EditableStaticAttribute : System.Attribute { }
 
     /// <summary>
-    /// ½ö¿É¶ÁµÄ¾²Ì¬×Ö¶Î/ÊôĞÔ
-    /// </summary>
-    [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
-    public class ReadonlyStaticAttribute : System.Attribute { }
-
-    /// <summary>
-    /// ÎŞ²ÎµÄ¾²Ì¬·½·¨
+    /// æ— å‚çš„é™æ€æ–¹æ³•
     /// </summary>
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = false, Inherited = true)]
-    public class VoidStaticMethodAttribute : System.Attribute { }
+    public class DebugMethodAttribute : System.Attribute { }
 
     /// <summary>
-    /// ×·×Ù¾²Ì¬³ÉÔ±µÄÀà
+    /// åŠ å…¥è°ƒè¯•çš„ç±»
     /// </summary>
     [AttributeUsage(AttributeTargets.Struct | AttributeTargets.Class, AllowMultiple = false, Inherited = true)]
-    public class TrackStaticAttribute : System.Attribute { }
+    public class DebugClassAttribute : System.Attribute { }
 
 }
