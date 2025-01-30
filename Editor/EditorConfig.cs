@@ -1,15 +1,19 @@
+using System;
 using System.IO;
 
 namespace MikanLab
 {
     /// <summary>
-    /// 运行时配置
+    /// 编辑器配置
     /// </summary>
-    public class RuntimeConfig : IProjectSetting
+    [Serializable]
+    public class EditorConfig:IProjectSetting
     {
+        
         #region 配置内容
         public string localizationPath = "Resources/Localization";
         #endregion
-        public string KeyName => "MikanLab/RuntimeConfig";
+        public string KeyName => "MikanLab/EditorConfig";
+
     }
 }
