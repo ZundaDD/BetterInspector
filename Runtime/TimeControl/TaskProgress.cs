@@ -41,10 +41,16 @@ namespace MikanLab
         /// 剩余任务数
         /// </summary>
         public int LeftTask => taskList.Count == 0 ? 0 : taskList.Count + 1;
+
+        /// <summary>
+        /// 全部任务数
+        /// </summary>
+        public int Alltask => allTask;
         #endregion
 
 
         Queue<Task> taskList = new();
+        int allTask = 0;
         string finishText = "";
         string currentText = "";
         int totalWeight = 0;
@@ -81,6 +87,7 @@ namespace MikanLab
         {
             taskList.Enqueue(new() { Description = description, Func = func, Weight = weight });
             totalWeight += weight;
+            allTask++;
         }
 
         /// <summary>
