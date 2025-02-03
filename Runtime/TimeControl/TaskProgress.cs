@@ -43,19 +43,28 @@ namespace MikanLab
         public int LeftTask => taskList.Count == 0 ? 0 : taskList.Count + 1;
 
         /// <summary>
+        /// 已经完成的任务
+        /// </summary>
+        public int HandledTask => allTask - taskList.Count;
+
+        /// <summary>
         /// 全部任务数
         /// </summary>
         public int Alltask => allTask;
+
+        /// <summary>
+        /// 完成委托
+        /// </summary>
+        public Action OnFinished;
         #endregion
 
-
-        Queue<Task> taskList = new();
-        int allTask = 0;
-        string finishText = "";
-        string currentText = "";
-        int totalWeight = 0;
-        int currentWeight = 0;
-        bool isRunning = false;
+        private Queue<Task> taskList = new();
+        private int allTask = 0;
+        private string finishText = "";
+        private string currentText = "";
+        private int totalWeight = 0;
+        private int currentWeight = 0;
+        private bool isRunning = false;
 
         /// <summary>
         /// 构造函数
@@ -98,7 +107,8 @@ namespace MikanLab
         {
             if (taskList.Count == 0)
             {
-                throw new Exception("任务列表为空！");
+                Debug.LogError("任务列表为空！");
+                return;
             }
             if (isRunning)
             {
@@ -128,6 +138,8 @@ namespace MikanLab
                 }
 
                 currentText = finishText;
+                OnFinished?.Invoke();
+                OnFinished = null;
                 isRunning = false;
             }
             catch (OperationCanceledException)
