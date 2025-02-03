@@ -9,6 +9,7 @@ namespace MikanLab
     {
         #region 配置内容
         public string localizationPath = "Resources/Localization";
+        public bool ifLogTaskFinished = true;
         #endregion
         public string KeyName => "MikanLab/RuntimeConfig";
     }

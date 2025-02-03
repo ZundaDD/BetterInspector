@@ -25,17 +25,20 @@ namespace MikanLab
 
         public override void OnActivate(string searchContext, VisualElement rootElement)
         {
-            Label title = new Label() { text = "  运行时配置/Runtime Config" };
-
-            title.style.fontSize = 20;
+            Label title =
+                GetHead(rootElement, "  运行时配置/Runtime Config", true, 20);
             title.style.paddingTop = 2;
-            title.style.unityFontStyleAndWeight = FontStyle.Bold;
-            rootElement.Add(title);
 
-            PropertyField localisationPath = new() {label = "本地化路径"};
-            localisationPath.BindProperty(settingProperty.FindPropertyRelative("localizationPath"));
-            rootElement.Add(localisationPath);
+            PropertyField localisationPath =
+                GetPropertyField(rootElement, "本地化路径", "localizationPath");
+
+            Label headLog =
+                GetHead(rootElement, "  输出/Log");
+
+            PropertyField ifLogTaskFinished = 
+                GetPropertyField(rootElement, "TaskProgress任务完成时", "ifLogTaskFinished");
         }
 
+        
     }
 }

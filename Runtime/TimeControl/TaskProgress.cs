@@ -133,7 +133,8 @@ namespace MikanLab
                     await task.Func();
                     await UniTask.Yield();
 
-                    Debug.Log($"Task {task.Description} Finished!");
+                    if(SerializedProjectSetting.GetRaw<RuntimeConfig>().ifLogTaskFinished)
+                        Debug.Log($"Task {task.Description} Finished!");
                     currentWeight += task.Weight;
                 }
 
@@ -144,11 +145,11 @@ namespace MikanLab
             }
             catch (OperationCanceledException)
             {
-                Debug.Log("任务被取消");
+                Debug.LogError("任务被取消");
             }
             catch (ThreadAbortException)
             {
-                Debug.Log("任务被强制终止");
+                Debug.LogError("任务被强制终止");
             }
             catch (Exception ex)
             {
