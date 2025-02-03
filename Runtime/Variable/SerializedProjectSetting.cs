@@ -68,7 +68,6 @@ namespace MikanLab
         {
             var ins = GetRaw<TSetting>();
             PlayerPrefs.SetString(ins.KeyName,JsonUtility.ToJson(ins));
-            Debug.Log(PlayerPrefs.GetString(ins.KeyName));
         }
 
         [SerializeReference]
