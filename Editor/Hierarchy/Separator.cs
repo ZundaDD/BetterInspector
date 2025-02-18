@@ -25,16 +25,15 @@ namespace MikanLab
 
             //绘制区域
             Rect fullRect = selectionRect;
-            fullRect.xMin = 31f;
+            fullRect.xMin = selectionRect.x;
             fullRect.xMax = EditorGUIUtility.currentViewWidth - frameoff;
-            fullRect.yMin -= 1;
-            fullRect.yMax += 1;
+
 
             Rect fillRect = selectionRect;
-            fillRect.xMin = 31f + frameoff;
+            fillRect.xMin = selectionRect.x + frameoff;
             fillRect.xMax = EditorGUIUtility.currentViewWidth - 2 * frameoff;
-            fillRect.yMin -= 1 - frameoff;
-            fillRect.yMax += 1 - frameoff;
+            fillRect.yMin += frameoff;
+            fillRect.yMax -= frameoff;
 
             Color formColor = GUI.color;
 
