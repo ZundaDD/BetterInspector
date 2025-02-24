@@ -33,7 +33,7 @@ namespace MikanLab
 
         public void Set(uint value)
         {
-            if (frameCount == 0) LifeCycle.Instance.Register(this);
+            if (frameCount == 0) LifeCycle.Register(this);
             frameCount = value;
         }
 
@@ -91,7 +91,7 @@ namespace MikanLab
         {
             if (frameCount != 0) return;
 
-            LifeCycle.Instance.Register(this);
+            LifeCycle.Register(this);
             frameCount = value;
         }
 
@@ -110,7 +110,7 @@ namespace MikanLab
         {
             if (frameCount == 0) return;
 
-            LifeCycle.Instance.Unregister(this);
+            LifeCycle.Unregister(this);
             doWhat?.Invoke();
             frameCount = 0;
         }
@@ -122,7 +122,7 @@ namespace MikanLab
         {
             if(frameCount == 0) return;
 
-            LifeCycle.Instance.Unregister(this);
+            LifeCycle.Unregister(this);
             frameCount = 0;
         }
 
@@ -204,7 +204,7 @@ namespace MikanLab
 
         public void Set()
         {
-            if (frameCount == 0) LifeCycle.Instance.Register(this);
+            if (frameCount == 0) LifeCycle.Register(this);
             frameCount = fixedFrame;
         }
 

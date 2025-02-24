@@ -27,7 +27,8 @@ namespace MikanLab
             Rect fullRect = selectionRect;
             fullRect.xMin = selectionRect.x;
             fullRect.xMax = EditorGUIUtility.currentViewWidth - frameoff;
-
+            //fullRect.yMin += 1 * frameoff;
+            //fullRect.yMax -= 1 * frameoff;
 
             Rect fillRect = selectionRect;
             fillRect.xMin = selectionRect.x + frameoff;
@@ -52,7 +53,7 @@ namespace MikanLab
 
             //绘制填充
             GUI.backgroundColor = com.FillColor;
-            GUI.Box(fillRect, com.Text, boxstyle);
+            GUI.Box(fillRect, gameObject.name, boxstyle);
             GUI.backgroundColor = formColor;
 
         }
@@ -65,3 +66,4 @@ namespace MikanLab
         }
     }
 }
+

@@ -153,7 +153,7 @@ namespace MikanLab
             }
             catch (Exception ex)
             {
-                Debug.LogError("任务发生异常：" + ex.Message);
+                Debug.LogError($"任务发生异常：{ex.Message}\n{ex.Source}\n{ex.StackTrace}\n{ex.InnerException}");
             }
         }
     }
