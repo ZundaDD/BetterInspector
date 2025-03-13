@@ -5,31 +5,37 @@ using UnityEngine;
 namespace MikanLab
 {
     /// <summary>
-    /// Ã¶¾ÙÊý×é
+    /// æžšä¸¾æ•°ç»„
     /// </summary>
-    /// <typeparam name="TEnum">Ã¶¾ÙÀàÐÍ</typeparam>
-    /// <typeparam name="TValue">ÖµÀàÐÍ</typeparam>
+    /// <typeparam name="TEnum">æžšä¸¾ç±»åž‹</typeparam>
+    /// <typeparam name="TValue">å€¼ç±»åž‹</typeparam>
     [Serializable]
     public class EnumArray<TEnum, TValue> where TEnum : Enum
     {
         /// <summary>
-        /// Êµ¼ÊÊý×é
+        /// å®žé™…æ•°ç»„
         /// </summary>
         [SerializeField] private TValue[] array;
-        
-        /// <summary>
-        /// ¶ÔÓ¦µÄË÷Òý
-        /// </summary>
-        static private Dictionary<TEnum, int> CorInd;
 
-        static EnumArray()
+        /// <summary>
+        /// å¯¹åº”çš„ç´¢å¼•
+        /// </summary>
+        private static Dictionary<TEnum, int> corInd;
+        public static Dictionary<TEnum, int> CorInd
         {
-            CorInd = new Dictionary<TEnum, int>();
-            int ind = 0;
-            foreach (TEnum EnumValue in Enum.GetValues(typeof(TEnum)))
+            get
             {
-                CorInd[EnumValue] = ind;
-                ind++;
+                if (corInd == null)
+                {
+                    corInd = new Dictionary<TEnum, int>();
+                    int ind = 0;
+                    foreach (TEnum EnumValue in Enum.GetValues(typeof(TEnum)))
+                    {
+                        CorInd[EnumValue] = ind;
+                        ind++;
+                    }
+                }
+                return corInd;
             }
         }
 
@@ -40,25 +46,24 @@ namespace MikanLab
         }
 
         /// <summary>
-        /// Ë÷ÒýÆ÷
+        /// ç´¢å¼•å™¨
         /// </summary>
-        /// <param name="_enum">Ã¶¾ÙÖµ</param>
-        /// <returns>¶ÔÓ¦Öµ</returns>
+        /// <param name="_enum">æžšä¸¾å€¼</param>
+        /// <returns>å¯¹åº”å€¼</returns>
         public TValue this[TEnum _enum]
         {
             get => array[CorInd[_enum]]; 
             set => array[CorInd[_enum]] = value;
         }
 
-
     }
 
     /// <summary>
-    /// ¶þÎ¬Ã¶¾ÙÊý×é
+    /// äºŒç»´æžšä¸¾æ•°ç»„
     /// </summary>
-    /// <typeparam name="TEnum1">Ã¶¾ÙÒ»</typeparam>
-    /// <typeparam name="TEnum2">Ã¶¾Ù¶þ</typeparam>
-    /// <typeparam name="TValue">ÖµÀàÐÍ</typeparam>
+    /// <typeparam name="TEnum1">æžšä¸¾ä¸€</typeparam>
+    /// <typeparam name="TEnum2">æžšä¸¾äºŒ</typeparam>
+    /// <typeparam name="TValue">å€¼ç±»åž‹</typeparam>
     public class DEnumArray<TEnum1, TEnum2, TValue>
     where TEnum1 : Enum
     where TEnum2 : Enum
@@ -79,11 +84,11 @@ namespace MikanLab
         }
 
         /// <summary>
-        /// ¼ÆËãË÷Òý
+        /// è®¡ç®—ç´¢å¼•
         /// </summary>
-        /// <param name="enum1">Ã¶¾ÙÖµ1</param>
-        /// <param name="enum2">Ã¶¾ÙÖµ2</param>
-        /// <returns>Êµ¼ÊË÷Òý</returns>
+        /// <param name="enum1">æžšä¸¾å€¼1</param>
+        /// <param name="enum2">æžšä¸¾å€¼2</param>
+        /// <returns>å®žé™…ç´¢å¼•</returns>
         private int CalculateIndex(TEnum1 enum1, TEnum2 enum2)
         {
             int index1 = Convert.ToInt32(enum1);
