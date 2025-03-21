@@ -12,6 +12,7 @@
 
 ## 计划加入
 <ul>
+<li>重写MAR，结合自动脚本生成和txt文件来编辑配置文件</li>
 <li>运行时加载器RuntimeLoader:提供方便快捷的资源文件加载方式</li>
 <li>模板脚本自动生成器TemplateScriptGenerator:提供类似于InputSystem一般的脚本生成器</li>
 </ul>
