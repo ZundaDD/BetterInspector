@@ -3,20 +3,19 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEditor;
+using UnityEditor.Callbacks;
 using UnityEditor.PackageManager.UI;
+using UnityEditor.UIElements;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace MikanLab
 {
     /// <summary>
     /// 多重属性资源编辑器
     /// </summary>
-    public class MultiAttributeWindow : AssetEditor<MultiAttributeResource,MultiAttributeWindow>
+    public class ConfigFileWindow : EditorWindow
     {
-        static MultiAttributeWindow()
-        {
-            WindowName = "多重属性资源编辑器";
-        }
 
         /// <summary>
         /// 滚动条值
@@ -32,15 +31,8 @@ namespace MikanLab
         /// 区域限制
         /// </summary>
         GUIStyle FieldStyle = new GUIStyle();
-        
-        /// <summary>
-        /// 工具栏打开窗口
-        /// </summary>
-        [MenuItem("Window/MikanLab/多重属性资源编辑器")] // 设置菜单项路径
-        public static void ShowWindow()
-        {
-            GetWindow<MultiAttributeWindow>("多重属性资源编辑器");
-        }
+
+        ConfigFile file;
 
         void Awake()
         {
@@ -51,18 +43,64 @@ namespace MikanLab
 
             //加载Icon
             deleteIcon = EditorResources.DeleteIcon;
-            
+
             //调整边距
-            FieldStyle.margin.top = -4; 
+            FieldStyle.margin.top = -4;
             FieldStyle.margin.bottom = -4;
         }
 
-        public override void OnGUI()
+        public void BindFile(ConfigFile config)
         {
-            base.OnGUI();
-            if (curEdit == null) return;
+            file = config;
+
+            AddToolBar();
+           
+
+        }
+        
+        public void AddToolBar()
+        {
+            Toolbar toolbar = new();
+            rootVisualElement.Add(toolbar);
+            toolbar.style.flexDirection = FlexDirection.Row;
+
+
+            ToolbarButton addConfig = new() { text = "添加新配置项" };
+            addConfig.clicked += AddNewConfig;
+            toolbar.Add(addConfig);
+
+            ToolbarButton addSection = new() { text = "添加新分块" };
+            addSection.clicked += AddNewSection;
+            toolbar.Add(addSection);
+        }
+
+        public void AddNewConfig()
+        {
+            
+        }
+
+        public void AddNewSection()
+        {
+            
+        }
+
+        public void DeleteThisConfig()
+        {
+
+        }
+
+        public void DeleteThisSection()
+        {
+
+        }
+
+        /*
+        public void OnGUI()
+        {
 
             int deleteIndex = -1; 
+            
+            
             
             //工具栏部分
             GUILayout.BeginHorizontal();
@@ -153,7 +191,7 @@ namespace MikanLab
                 Repaint();
             }
             
-        }
+        }*/
 
     }
     

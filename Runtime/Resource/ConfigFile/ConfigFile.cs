@@ -6,15 +6,15 @@ using UnityEngine;
 namespace MikanLab
 {
     [Serializable]
-    [CreateAssetMenu(fileName = "MAR", menuName = "MikanLab/¶àÊôĞÔ×ÊÔ´")]
+    [CreateAssetMenu(fileName = "Config", menuName = "MikanLab/é…ç½®æ–‡ä»¶")]
     /// <summary>
-    /// ¿ÉÒÔ´æ´¢¶àÖÖÊôĞÔµÄ×ÊÔ´ÎÄ¼ş
+    /// å¯ä»¥å­˜å‚¨å¤šç§å±æ€§çš„èµ„æºæ–‡ä»¶
     /// </summary>
-    public class MultiAttributeResource : ScriptableObject,ISerializationCallbackReceiver
+    public class ConfigFile : ScriptableObject,ISerializationCallbackReceiver
     {
         [NonSerialized] public List<BaseAttribute> attributes = new();
         
-        #region ĞòÁĞ»¯²¿·Ö
+        #region åºåˆ—åŒ–éƒ¨åˆ†
         
         [SerializeField] public List<StringAttribute> strings = new();
         [SerializeField] public List<IntAttribute> ints = new();
@@ -23,7 +23,7 @@ namespace MikanLab
         [SerializeField] public List<AttributeType> orders = new();
 
         /// <summary>
-        /// ĞòÁĞ»¯Ç°µÄ×ªÒÆ
+        /// åºåˆ—åŒ–å‰çš„è½¬ç§»
         /// </summary>
         /// <exception cref="NotImplementedException"></exception>
         public void OnBeforeSerialize()
@@ -90,12 +90,18 @@ namespace MikanLab
         }
         #endregion
 
-        #region ·ÃÎÊÖµ²¿·Ö
+        #region è®¿é—®å€¼éƒ¨åˆ†
+
+        public BaseAttribute this[string index]
+        {
+            get { return null; }
+        }
+
         /// <summary>
-        /// »ñÈ¡Ò»¸ö×Ö·û´®
+        /// è·å–ä¸€ä¸ªå­—ç¬¦ä¸²
         /// </summary>
-        /// <param name="Name">ÊôĞÔÃû³Æ</param>
-        /// <returns>stringÖµ</returns>
+        /// <param name="Name">å±æ€§åç§°</param>
+        /// <returns>stringå€¼</returns>
         public string GetString(string Name)
         {
             foreach (BaseAttribute a in attributes)
@@ -110,10 +116,10 @@ namespace MikanLab
         }
 
         /// <summary>
-        /// »ñÈ¡Ò»¸öfloatÖµ
+        /// è·å–ä¸€ä¸ªfloatå€¼
         /// </summary>
-        /// <param name="Name">ÊôĞÔÃû³Æ</param>
-        /// <returns>floatÖµ</returns>
+        /// <param name="Name">å±æ€§åç§°</param>
+        /// <returns>floatå€¼</returns>
         public float GetFloat(string Name)
         {
             foreach (BaseAttribute a in attributes)
@@ -128,10 +134,10 @@ namespace MikanLab
         }
 
         /// <summary>
-        /// »ñÈ¡Ò»¸öintÖµ
+        /// è·å–ä¸€ä¸ªintå€¼
         /// </summary>
-        /// <param name="Name">ÊôĞÔÃû³Æ</param>
-        /// <returns>intÖµ</returns>
+        /// <param name="Name">å±æ€§åç§°</param>
+        /// <returns>intå€¼</returns>
         public int GetInt(string Name)
         {
             foreach (BaseAttribute a in attributes)
@@ -146,10 +152,10 @@ namespace MikanLab
         }
 
         /// <summary>
-        /// »ñÈ¡Ò»¸öboolÖµ
+        /// è·å–ä¸€ä¸ªboolå€¼
         /// </summary>
-        /// <param name="Name">ÊôĞÔÃû³Æ</param>
-        /// <returns>boolÖµ</returns>
+        /// <param name="Name">å±æ€§åç§°</param>
+        /// <returns>boolå€¼</returns>
         public bool GetBool(string Name)
         {
             foreach (BaseAttribute a in attributes)
