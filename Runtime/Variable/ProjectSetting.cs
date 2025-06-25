@@ -18,19 +18,19 @@ namespace MikanLab
     /// 序列化的项目设置
     /// </summary>
     /// <typeparam name="TSetting">设置对象</typeparam>
-    public class SerializedProjectSetting : ScriptableObject
+    public class ProjectSetting : ScriptableObject
     {
         private static Dictionary<Type,IProjectSetting> insDict = new();
-
+        
         /// <summary>
         /// 获取序列化的配置
         /// </summary>
         /// <typeparam name="TSetting">配置类型</typeparam>
         /// <returns>序列化配置</returns>
-        public static SerializedProjectSetting GetSerialized<TSetting>() where TSetting : class, IProjectSetting, new()
+        public static ProjectSetting Serialized<TSetting>() where TSetting : class, IProjectSetting, new()
         {
-            var obj = ScriptableObject.CreateInstance<SerializedProjectSetting>();
-            obj.Setting = GetRaw<TSetting>();
+            var obj = ScriptableObject.CreateInstance<ProjectSetting>();
+            obj.Setting = Raw<TSetting>();
             return obj;
         }
 
@@ -39,7 +39,7 @@ namespace MikanLab
         /// </summary>
         /// <typeparam name="TSetting">配置类型</typeparam>
         /// <returns>配置单例</returns>
-        public static TSetting GetRaw<TSetting>() where TSetting : class,IProjectSetting,new()
+        public static TSetting Raw<TSetting>() where TSetting : class,IProjectSetting,new()
         {
             insDict.TryGetValue(typeof(TSetting), out var setting);
             if(setting == null) insDict.Add(typeof(TSetting),FromPrefs<TSetting>());
@@ -66,7 +66,7 @@ namespace MikanLab
         /// <typeparam name="TSetting"></typeparam>
         public static void UpdateValue<TSetting>() where TSetting : class, IProjectSetting, new()
         {
-            var ins = GetRaw<TSetting>();
+            var ins = Raw<TSetting>();
             PlayerPrefs.SetString(ins.KeyName,JsonUtility.ToJson(ins));
         }
 

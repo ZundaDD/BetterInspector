@@ -1,12 +1,9 @@
 {
-  "name": "com.mikanlab.better_inspector",
-  "displayName": "Better Inspector",
-  "version": "1.3.0",
+  "name": "com.mikanlab.mikanlabext",
+  "displayName": "MikanLabExt",
+  "version": "2.0.0",
   "description": "Add some extensions to Unity",
   "unity": "2022.3",
-  "dependencies": {
-    "com.mikanlab.node_graph_template": "https://github.com/ZundaDD/NodeGraphTemplate.git"
-  },
   "author": {
     "name": "Hasekawa Mikan",
     "email": "jenxnka@gamail.com"

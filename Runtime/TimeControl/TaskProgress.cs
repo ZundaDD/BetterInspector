@@ -133,7 +133,7 @@ namespace MikanLab
                     await task.Func();
                     await UniTask.Yield();
 
-                    if(SerializedProjectSetting.GetRaw<RuntimeConfig>().ifLogTaskFinished)
+                    if(ProjectSetting.Raw<MikanLabExtConfig>().ifLogTaskFinished)
                         Debug.Log($"Task {task.Description} Finished!");
                     currentWeight += task.Weight;
                 }

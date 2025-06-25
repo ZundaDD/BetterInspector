@@ -5,12 +5,12 @@ using UnityEngine.UIElements;
 namespace MikanLab
 {
     [InitializeOnLoad]
-    public class SeparatorDrawer : Editor
+    public class GameObjectDrawer : Editor
     {
         static int frameoff = 1;
         static Object prefabIcon;
 
-        static SeparatorDrawer()
+        static GameObjectDrawer()
         {
             EditorApplication.hierarchyWindowItemOnGUI += OnHierarchyWindowItemGUI;
             prefabIcon = EditorGUIUtility.FindTexture("Prefab Icon");
@@ -23,7 +23,8 @@ namespace MikanLab
             GameObject gameObject = EditorUtility.InstanceIDToObject(instanceID) as GameObject;
 
             if (gameObject == null) return;
-            if (!gameObject.TryGetComponent(out SeparatorComponent com)) return;
+            if (!ProjectSetting.Raw<MikanLabExtConfig>().ifDrawGameObejct) return;
+            gameObject.TryGetComponent<HierarchyColorOverride>(out var com);
 
             //绘制区域
             Rect fullRect = selectionRect;
@@ -59,7 +60,8 @@ namespace MikanLab
             GUI.backgroundColor = formColor;
 
             //绘制填充
-            GUI.backgroundColor = com.FillColor;
+            if (com != null) GUI.backgroundColor = com.FillColor;
+            else GUI.backgroundColor = ProjectSetting.Raw<MikanLabExtConfig>().hierarchyFillColor;
             GUI.Box(fillRect, gameObject.name, boxstyle);
             GUI.backgroundColor = formColor;
 
@@ -68,12 +70,6 @@ namespace MikanLab
                 GUI.DrawTexture(iconRect, prefabIcon as Texture);
         }
 
-        [MenuItem("GameObject/MikanLab/分割线")]
-        static void CreateSeparator()
-        {
-            GameObject go = new GameObject();
-            go.AddComponent<SeparatorComponent>();
-        }
     }
 }
 
