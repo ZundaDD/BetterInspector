@@ -2,20 +2,21 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine.UIElements;
 
-namespace MikanLab
+#if UNITY_EDITOR
+namespace #NAMESPACE#
 {
-    public class RuntimeConfigProvider : ProjectSettingProvider<MikanLabExtConfig>
+    public class #FILENAME# : ProjectSettingProvider<#PARENT#>
     {
-        public RuntimeConfigProvider(string path, SettingsScope scopes = SettingsScope.User)
+        public #FILENAME# (string path, SettingsScope scopes = SettingsScope.User)
             : base(path, scopes) { }
 
         [SettingsProvider]
         public static SettingsProvider CreateProvider()
         {
-            var provider = new RuntimeConfigProvider("Project/MikanLabExtConfig", SettingsScope.Project)
+            var provider = new #FILENAME#("Project/#PARENT#", SettingsScope.Project)
             {
-                label = "MikanLabExtConfig",
-                keywords = new HashSet<string>(new[] { "MikanLab" }),
+                label = "#PARENT#",
+                keywords = new HashSet<string>(new[] { "#PARENT#" }),
             };
             return provider;
         }
@@ -24,7 +25,7 @@ namespace MikanLab
         public override void OnActivate(string searchContext, VisualElement rootElement)
         {
             Label title =
-                GetHead(rootElement, "MikanLabExt Config", true, 20);
+                GetHead(rootElement, "#PARENT#", true, 20);
             title.style.paddingTop = 2;
 
             base.OnActivate(searchContext, rootElement);
@@ -33,3 +34,4 @@ namespace MikanLab
         
     }
 }
+#endif

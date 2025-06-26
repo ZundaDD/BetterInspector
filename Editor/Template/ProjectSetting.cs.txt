@@ -1,0 +1,20 @@
+using UnityEngine;
+
+namespace #NAMESPACE#
+{
+    /// <summary>
+    /// 
+    /// </summary>
+    public class #FILENAME# : IProjectSetting
+    {
+        #region Config
+        
+        // Example
+        // [Section("Hierarchy"), Label("Color")]
+        // public Color hierarchyColor = Color.white;
+
+        #endregion
+
+        public string KeyName => "#FILENAME#";
+    }
+}

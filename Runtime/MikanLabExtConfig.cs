@@ -1,4 +1,3 @@
-using System.IO;
 using UnityEngine;
 
 namespace MikanLab
@@ -12,7 +11,10 @@ namespace MikanLab
         
         [Section("资源管理"), Label("本地化路径")]
         public string localizationPath = "Resources/Localization";
-        
+
+        [Section("模板关键字"), Label("命名空间")]
+        public string templateNamespace = "DEFAULTS";
+
         [Section("时间控制"), Label("TaskProgress任务完成输出")]
         public bool ifLogTaskFinished = true;
 
