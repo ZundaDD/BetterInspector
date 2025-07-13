@@ -10,13 +10,13 @@ namespace MikanLab
     /// </summary>
     public static class TemplateInstance
     {
-        [MenuItem("Template/ProjectSetting")]
+        [MenuItem("Assets/Create/MikanLab/ProjectSetting")]
         public static void CreateProjectSetting()
         {
             TemplateGenerator.CreateCascadeTemplate("ProjectSetting.cs", new() { "#Provider.cs" });
         }
 
-        [MenuItem("Template/NamespaceMono")]
+        [MenuItem("Assets/Create/MikanLab/NamespaceMono")]
         public static void CreateNamespaceMono() => TemplateGenerator.CreateFromTemplate("NamespaceMono.cs");
     }
 }

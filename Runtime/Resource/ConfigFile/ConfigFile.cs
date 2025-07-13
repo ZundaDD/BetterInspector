@@ -6,7 +6,7 @@ using UnityEngine;
 namespace MikanLab
 {
     [Serializable]
-    [CreateAssetMenu(fileName = "Config", menuName = "MikanLab/配置文件")]
+    [CreateAssetMenu(fileName = "Config", menuName = "MikanLab/ConfigFile")]
     /// <summary>
     /// 可以存储多种属性的资源文件
     /// </summary>
