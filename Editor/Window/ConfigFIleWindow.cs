@@ -86,7 +86,7 @@ namespace MikanLab
 
         public void DeleteThisConfig()
         {
-
+            
         }
 
         public void DeleteThisSection()

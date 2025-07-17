@@ -16,6 +16,12 @@ namespace MikanLab
             TemplateGenerator.CreateCascadeTemplate("ProjectSetting.cs", new() { "#Provider.cs" });
         }
 
+        [MenuItem("Assets/Create/MikanLab/NamespaceEnum")]
+        public static void CreateNamespaceEnum() => TemplateGenerator.CreateFromTemplate("NamespaceEnum.cs");
+
+        [MenuItem("Assets/Create/MikanLab/NamespaceSO")]
+        public static void CreateNamespaceSO() => TemplateGenerator.CreateFromTemplate("NamespaceSO.cs");
+
         [MenuItem("Assets/Create/MikanLab/NamespaceMono")]
         public static void CreateNamespaceMono() => TemplateGenerator.CreateFromTemplate("NamespaceMono.cs");
     }
